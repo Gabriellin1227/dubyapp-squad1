@@ -1,0 +1,45 @@
+:root {
+    /* Cores */
+
+    --background: #F6F6F6;
+    --principal: #412884;
+
+    --comp-1: #322871;
+    --comp-2: #262756;
+    --comp-3: #12283F;
+    --comp-4: #73BA60;
+
+    --texto: #12283F;
+    --input: rgba(65, 40, 132, 0.1);
+    --placeholder: hsla(211, 56%, 16%, 0.8);
+
+    /* Fontes */
+
+    --fonte-padrao: 'Inter';
+    --font-ssn: 4px;
+    --font-sn: 8px;
+    --font-snd: 14px;
+    --font-md: 16px;
+    --font-slg: 20px;
+    --font-lg: 24px;
+    --font-xl: 32px;
+    --font-xxl: 40px;
+
+    /* Espaçamentos */
+
+    --spacing-ssm: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Altura total */
+
+    --total-height: calc(100vh - 80px);
+}
+
+@media screen and (max-height: 770px), (max-width: 1439px) {
+    body {
+        background-color: var(--principal);
+    }
+}
