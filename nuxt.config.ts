@@ -15,8 +15,13 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Montserrat: true,
       Inter: true,
     }
+  },
+  css: [
+    '~/assets/css/main.css'
+  ],
+  routeRules: {
+    "/": { redirect: "/dashboard"},
   }
 })
