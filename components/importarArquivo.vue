@@ -7,7 +7,7 @@ defineProps({
     options: Array
 });
 
-const emit = defineEmits(['next', 'back']);
+const emit = defineEmits(['next', 'back', 'showImportedArchives']);
 const archive = ref<File | null>(null);
 const archiveInput = ref<HTMLInputElement | null>(null);
 
@@ -24,6 +24,14 @@ const handleFileInput = (event: Event) => {
         archive.value = files[0];
     }
 };
+
+const handleAreaClick = (event) => {
+    if (archive.value) {
+        return;
+    }
+
+    emit('showImportedArchives');
+}
 
 const removeArchive = () => {
     archive.value = null;
@@ -60,41 +68,41 @@ const removeArchive = () => {
                     corretas.
                 </p>
                 </div>
-                <div class="areaDeUpload" @dragover.prevent @dragenter.prevent @drop.prevent="handleDrop" @click="importedFiles">
-                    <!-- Label associado ao input-->
+                <div class="areaDeUpload" @dragover.prevent @dragenter.prevent @drop.prevent="handleDrop">
                     <label
                     for="inputArquivo"
                     id="areaDeUpload"
                     role="button"
                     tabindex="0"
+                    @click.prevent="handleAreaClick"
                     >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                        <path fill="#979797" fill-rule="evenodd" d="M12 2.5a5.5 5.5 0 0 0-5.02 3.25a23 23 0 0 1-.186.41l-.068.132a.5.5 0 0 1-.127.14a.5.5 0 0 1-.18.058c-.036.007-.11.01-.419.01a3.5 3.5 0 1 0 0 7h.672l1-1H6a2.5 2.5 0 0 1 0-5h.054c.226 0 .413 0 .562-.03c.18-.036.358-.09.526-.2c.168-.108.29-.248.398-.398c.058-.08.11-.184.157-.283q.074-.159.193-.424l.002-.005a4.501 4.501 0 0 1 8.216 0l.002.006q.119.264.193.423c.047.099.099.202.157.283c.107.15.23.29.398.399s.346.163.526.2c.149.03.336.03.562.029H18a2.5 2.5 0 0 1 0 5h-1.672l1 1H18a3.5 3.5 0 1 0 0-7c-.309 0-.383-.003-.418-.01a.5.5 0 0 1-.18-.059a.5.5 0 0 1-.128-.14l-.016-.027l-.052-.105a23 23 0 0 1-.186-.409A5.5 5.5 0 0 0 12 2.5" clip-rule="evenodd" />
-                        <path fill="#979797" d="m12 12l-.354-.354l.354-.353l.354.353zm.5 9a.5.5 0 0 1-1 0zm-4.854-5.354l4-4l.708.708l-4 4zm4.708-4l4 4l-.708.708l-4-4zM12.5 12v9h-1v-9z" />
-                    </svg>
-                    <div class="textoUpload" v-if="archive">
-                        <div class="textoPrincipal">
-                            Arquivo: {{ archive.name }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                            <path fill="#979797" fill-rule="evenodd" d="M12 2.5a5.5 5.5 0 0 0-5.02 3.25a23 23 0 0 1-.186.41l-.068.132a.5.5 0 0 1-.127.14a.5.5 0 0 1-.18.058c-.036.007-.11.01-.419.01a3.5 3.5 0 1 0 0 7h.672l1-1H6a2.5 2.5 0 0 1 0-5h.054c.226 0 .413 0 .562-.03c.18-.036.358-.09.526-.2c.168-.108.29-.248.398-.398c.058-.08.11-.184.157-.283q.074-.159.193-.424l.002-.005a4.501 4.501 0 0 1 8.216 0l.002.006q.119.264.193.423c.047.099.099.202.157.283c.107.15.23.29.398.399s.346.163.526.2c.149.03.336.03.562.029H18a2.5 2.5 0 0 1 0 5h-1.672l1 1H18a3.5 3.5 0 1 0 0-7c-.309 0-.383-.003-.418-.01a.5.5 0 0 1-.18-.059a.5.5 0 0 1-.128-.14l-.016-.027l-.052-.105a23 23 0 0 1-.186-.409A5.5 5.5 0 0 0 12 2.5" clip-rule="evenodd" />
+                            <path fill="#979797" d="m12 12l-.354-.354l.354-.353l.354.353zm.5 9a.5.5 0 0 1-1 0zm-4.854-5.354l4-4l.708.708l-4 4zm4.708-4l4 4l-.708.708l-4-4zM12.5 12v9h-1v-9z" />
+                        </svg>
+                        <div class="textoUpload" v-if="archive">
+                            <div class="textoPrincipal">
+                                Arquivo: {{ archive.name }}
+                            </div>
+                            <button @click.stop.prevent="removeArchive" class="remove-archive-button">x</button>
                         </div>
-                        <button @click.stop="removeArchive" class="remove-archive-button">x</button>
-                    </div>
-                    <div class="textoUpload" v-else>
-                        <div class="textoPrincipal">
-                            Solte o arquivo ou clique para buscar
+                        <div class="textoUpload" v-else>
+                            <div class="textoPrincipal">
+                                Solte o arquivo ou clique para buscar
+                            </div>
+                            <div class="texto2" id="arquivos">
+                                Arquivo CSV ou OFX de até 50MB
+                            </div>
                         </div>
-                        <div class="texto2" id="arquivos">
-                            Arquivo CSV ou OFX de até 50MB
-                        </div>
-                    </div>
-                    <!-- Input  -->
-                    <input
-                    type="file"
-                    id="inputArquivo"
-                    accept=".csv,.ofx"
-                    hidden
-                    @change="handleFileInput"
-                    />
-                </label>
+                        <!-- Input  -->
+                        <input
+                        type="file"
+                        id="inputArquivo"
+                        accept=".csv,.ofx"
+                        hidden
+                        @change="handleFileInput"
+                        />
+                    </label>
                 </div>
             </div>
         </div>

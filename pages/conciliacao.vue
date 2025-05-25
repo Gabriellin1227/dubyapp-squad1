@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import importarArquivo from '~/components/importarArquivo.vue';
+import arquivosImportados from '~/components/arquivosImportados.vue';
 
 const step = ref(1);
+const importArchive = ref(null);
+const importedArchives = ref(null);
 
 const steps = [
     {
@@ -18,23 +21,38 @@ const steps = [
 ];
 
 const nextStep = () => {
-    if (step.value < steps.length) step.value++;
+    if (step.value == steps.length) {
+        console.log('opa, ativou!'); // ir para conciliação
+    } else if (step.value < steps.length) {
+        step.value++;
+    }
 };
 
 const backStep = () => {
     if (step.value == steps.length) step.value--;
-}
+};
+
+const showImportedArchives = () => {
+    importArchive.value.$el.style.display = 'none';
+    importedArchives.value.$el.style.display = 'flex';
+};
 </script>
 
 <template>
     <div class="main-container">
         <importarArquivo
+        ref="importArchive"
         :key="step"
         :title="steps[step - 1].title"
         :labelSelector="steps[step - 1].labelSelector"
         :options="steps[step - 1].options"
         @next="nextStep"
         @back="backStep"
+        @showImportedArchives="showImportedArchives"
+        />
+        <arquivosImportados
+        ref="importedArchives"
+        class="importedArchives"
         />
     </div>
 </template>
@@ -44,5 +62,9 @@ const backStep = () => {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.importedArchives {
+    display: none;
 }
 </style>
