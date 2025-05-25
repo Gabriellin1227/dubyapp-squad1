@@ -1,4 +1,88 @@
-<script setup></script>
+<script setup lang="ts">
+const emit = defineEmits(['showImportedArchives']);
+const showingImporteds = ref(false);
+
+const importedArchives = [
+  {
+    name: 'arquivo001.ofx',
+    period: '01.04.2024 - 02.05.2024',
+    importDate: '03.05.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'transacoes_fevereiro.csv',
+    period: '01.02.2024 - 29.02.2024',
+    importDate: '01.03.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'recebimentos_marco.ofx',
+    period: '01.03.2024 - 31.03.2024',
+    importDate: '02.04.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'clientes_novos.csv',
+    period: '15.03.2024 - 15.04.2024',
+    importDate: '16.04.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'movimentacao_banco.ofx',
+    period: '10.04.2024 - 30.04.2024',
+    importDate: '01.05.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'relatorio_maio.csv',
+    period: '01.05.2024 - 20.05.2024',
+    importDate: '21.05.2024',
+    importedBy: 'Jonathan Curvelo'
+  },
+  {
+    name: 'relatorio_maio.csv',
+    period: '01.05.2024 - 20.05.2024',
+    importDate: '21.05.2024',
+    importedBy: 'Jonathan Curvelo'
+  }
+];
+
+import { ref } from 'vue';
+
+defineProps({
+    title: String,
+    labelSelector: String,
+    options: Array
+});
+
+const archive = ref<File | null>(null);
+const archiveInput = ref<HTMLInputElement | null>(null);
+
+const handleDrop = (/** @type {DragEvent} */ event) => {
+    const files = event.dataTransfer?.files;
+    if(files && files.length) {
+        archive.value = files[0];
+    }
+};
+
+const handleFileInput = (event: Event) => {
+    const files = (event.target as HTMLInputElement).files;
+    if (files && files.length) {
+        archive.value = files[0];
+    }
+};
+
+const removeArchive = () => {
+    archive.value = null;
+    if (archiveInput.value) archiveInput.value.value = '';
+};
+
+
+const toggleArea = () => {
+  showingImporteds.value = !showingImporteds.value;
+};
+
+</script>
 
 <template>
     <div class="container">
@@ -8,7 +92,7 @@
                     <h1>Selecionar um arquivo</h1>
                 </div>
                 <a href="#">
-                    <div class="iconeCancelar">
+                    <div class="iconeCancelar" @click="emit('showImportedArchives')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                             <path fill="none" stroke="#412884" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5 19l7-7m0 0l7-7m-7 7L5 5m7 7l7 7" />
                         </svg>
@@ -17,233 +101,45 @@
             </div>
             <div class="header-table">
                 <div class="select-area">
-                    <a href="#">
-                        <div class="area-select">
+                    <a href="#" @click="toggleArea">
+                        <div :class="['area-select', { active: !showingImporteds }]" id="uploadArea">
                             Upload
+                            <div class="selected-area-bar"></div>
                         </div>
                     </a>
-                    <a href="">
-                        <div class="area-select active">
+                    <a href="#" @click="toggleArea">
+                        <div :class="['area-select', { active: showingImporteds }]" id="importedArea">
                             Importados
                             <div class="selected-area-bar"></div>
                         </div>
                     </a>
                 </div>
-                <div class="table-titles">
+                <div id="tableImportedTitles" class="table-titles" v-show="showingImporteds">
                     <div class="table-title">Nome</div>
                     <div class="table-title">Período</div>
                     <div class="table-title">Data de importação</div>
                     <div class="table-title">Importado por</div>
                 </div>
             </div>
-            <div class="table-container" tabindex="-1">
+            <div id="tableImportedContainer" class="table-container" tabindex="-1" v-show="showingImporteds">
                 <table>
                     <tbody>
-                        <tr>
+                        <tr v-for="archive in importedArchives">
                             <td>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
                                 </svg>
                             </td>
-                            <td>arquivo0001.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
+                            <td class="fade-text">{{ archive.name }}</td>
+                            <td>{{ archive.period }}</td>
+                            <td>{{ archive.importDate }}</td>
+                            <td>{{ archive.importedBy }}</td>
                             <td>
                                 <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0002.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0003.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0004.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0005.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0006.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0007.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0008.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0009.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                                        </g>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                    <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
-                                </svg>
-                            </td>
-                            <td>arquivo0010.csv</td>
-                            <td>01.04.2024 - 02.05.2024</td>
-                            <td>01.04.2024</td>
-                            <td>Jonathan Curvelo</td>
-                            <td>
-                                <a href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" stroke="#f6f6f6b3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                            <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                                            <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
+                                        <g fill="none" stroke="#C5BED7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" color="#C5BED7">
+                                            <path d="M21.544 11.045c.304.426.456.64.456.955c0 .316-.152.529-.456.955C20.178 14.871 16.689 19 12 19c-4.69 0-8.178-4.13-9.544-6.045C2.152 12.529 2 12.315 2 12c0-.316.152-.529.456-.955C3.822 9.129 7.311 5 12 5c4.69 0 8.178 4.13 9.544 6.045" />
+                                            <path d="M15 12a3 3 0 1 0-6 0a3 3 0 0 0 6 0" />
                                         </g>
                                     </svg>
                                 </a>
@@ -251,6 +147,42 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div id="fieldUpload" class="areaDeUpload" @dragover.prevent @dragenter.prevent @drop.prevent="handleDrop" v-show="!showingImporteds">
+                <label
+                for="inputArquivosimportados"
+                id="areaDeUpload"
+                role="button"
+                tabindex="0"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                        <path fill="#979797" fill-rule="evenodd" d="M12 2.5a5.5 5.5 0 0 0-5.02 3.25a23 23 0 0 1-.186.41l-.068.132a.5.5 0 0 1-.127.14a.5.5 0 0 1-.18.058c-.036.007-.11.01-.419.01a3.5 3.5 0 1 0 0 7h.672l1-1H6a2.5 2.5 0 0 1 0-5h.054c.226 0 .413 0 .562-.03c.18-.036.358-.09.526-.2c.168-.108.29-.248.398-.398c.058-.08.11-.184.157-.283q.074-.159.193-.424l.002-.005a4.501 4.501 0 0 1 8.216 0l.002.006q.119.264.193.423c.047.099.099.202.157.283c.107.15.23.29.398.399s.346.163.526.2c.149.03.336.03.562.029H18a2.5 2.5 0 0 1 0 5h-1.672l1 1H18a3.5 3.5 0 1 0 0-7c-.309 0-.383-.003-.418-.01a.5.5 0 0 1-.18-.059a.5.5 0 0 1-.128-.14l-.016-.027l-.052-.105a23 23 0 0 1-.186-.409A5.5 5.5 0 0 0 12 2.5" clip-rule="evenodd" />
+                        <path fill="#979797" d="m12 12l-.354-.354l.354-.353l.354.353zm.5 9a.5.5 0 0 1-1 0zm-4.854-5.354l4-4l.708.708l-4 4zm4.708-4l4 4l-.708.708l-4-4zM12.5 12v9h-1v-9z" />
+                    </svg>
+                    <div class="textoUpload" v-if="archive">
+                        <div class="textoPrincipal">
+                            {{ archive.name }}
+                        </div>
+                        <button @click.stop.prevent="removeArchive" class="remove-archive-button">x</button>
+                    </div>
+                    <div class="textoUpload" v-else>
+                        <div class="textoPrincipal">
+                            Solte o arquivo ou clique para buscar
+                        </div>
+                        <div class="texto2" id="arquivos">
+                            Arquivo CSV ou OFX de até 50MB
+                        </div>
+                    </div>
+                    <!-- Input  -->
+                    <input
+                    type="file"
+                    id="inputArquivosimportados"
+                    ref="archiveInput"
+                    accept=".csv,.ofx"
+                    hidden
+                    @change="handleFileInput"
+                    />
+                </label>
             </div>
         </div>
 </template>
@@ -357,16 +289,9 @@ main {
 
         padding: 0 32px;
 
-        a {
-            border-radius: 5px;
+        border-bottom: 1px solid rgb(246, 246, 246, 0.1);
 
-            outline: 2px solid transparent;
-            transition: outline 0.3s ease-in-out;
-        }
-
-        a:focus {
-            outline: 2px solid var(--comp-4);
-        }
+        
 
         .area-select {
             display: flex;
@@ -397,9 +322,8 @@ main {
             width: 136px;
 
             background: rgba(246, 246, 246, 0.10);
-        }
-
-        .selected-area-bar {
+            
+            .selected-area-bar {
             width: 54px;
             height: 3px;
             border-radius: 10px 10px 0 0;
@@ -408,6 +332,7 @@ main {
             left: 50%;
             bottom: 0;
             transform: translateX(-50%);
+        }
         }
     }
 
@@ -421,7 +346,6 @@ main {
 
         padding: 0 84px;
 
-        border-top: 1px solid rgb(246, 246, 246, 0.1);
         border-bottom: 1px solid rgb(246, 246, 246, 0.1);
 
         .table-title {
@@ -492,6 +416,15 @@ main {
                 background-color: rgb(246, 246, 246, 0.1);
             }
 
+            .fade-text {
+                max-width: 100%;               /* Ajuste conforme seu layout */
+                white-space: nowrap;
+                overflow: hidden;
+
+                -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+                mask-image: linear-gradient(to right, black 70%, transparent 100%);
+            }
+
             td {
                 display: flex;
                 align-items: center;
@@ -499,6 +432,10 @@ main {
                 color: var(--background);
                 font-size: var(--font-md);
                 font-weight: 400;
+
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
 
                 a {
                     display: flex;
@@ -517,5 +454,147 @@ main {
             }
         }
     }
+}
+.areaDeUpload {
+    height: 100%;
+    width: 880px;
+    padding: 12px;
+
+    background: var(--background); 
+    border-radius: 10px;
+
+    transition: background 1s ease;
+}
+
+#areaDeUpload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+
+    background: var(--background); 
+    border-radius: 10px;
+    border: 1px dashed var(--texto);
+
+    outline: 1px solid transparent;
+    transition: outline 0.3s ease-in-out;
+}
+
+#areaDeUpload:hover {
+    cursor: pointer;
+}
+
+#areaDeUpload:focus {
+    outline: 2px solid var(--comp-4);
+}
+
+.textoUpload {
+    text-align: center;
+    color: var(--texto);
+    font-family: var(--fonte-padrao);
+}
+
+.centerFileInput {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.textoPrincipal {
+    line-height: 32px;
+    font-size: var(--font-md);
+}
+
+.texto2 {
+    color: #979797;
+    line-height: 24px;
+    font-size: var(--font-snd);
+}
+
+.remove-archive-button {
+    height: min-content;
+    width: 26px;
+
+    color: var(--background);
+    background-color: var(--principal);
+
+    border: 0;
+    border-radius: 5px;
+}
+
+.botao {
+    display: flex;
+    gap: var(--spacing-xl);
+}
+
+.botao button {
+    border: 0;
+}
+
+#botao1 {
+    width: 152px;
+    height: 56px;
+    padding: 11px 30px; 
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--font-md);
+    font-family: var(--fonte-padrao);
+    font-weight: 500;
+
+    background: var(--principal);
+    color: #F5F5F5;
+
+    border: 1px solid var(--background);
+
+    outline: 2px solid transparent;
+    transition: outline 0.3s ease-in-out;
+}
+
+#botao1:hover {
+    cursor: pointer;
+    background: var(--comp-1);
+}
+
+#botao1:focus {
+    outline: 2px solid var(--comp-4);
+}
+
+#botao2 {
+
+    width: 152px;
+    height: 56px;
+    padding: 11px 30px; 
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--font-md);
+    font-family: var(--fonte-padrao);
+    font-weight: 500;
+
+    background: var(--background);
+    color: var(--principal);
+
+    outline: 2px solid transparent;
+    transition: outline 0.3s ease-in-out;
+}
+
+#botao2:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
+}
+
+#botao2:focus {
+    outline: 2px solid var(--comp-4);
 }
 </style>

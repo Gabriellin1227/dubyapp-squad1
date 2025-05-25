@@ -33,8 +33,13 @@ const backStep = () => {
 };
 
 const showImportedArchives = () => {
-    importArchive.value.$el.style.display = 'none';
-    importedArchives.value.$el.style.display = 'flex';
+    if (importedArchives.value.$el.style.display != 'flex') {
+        importArchive.value.$el.style.display = 'none';
+        importedArchives.value.$el.style.display = 'flex';
+    } else if (importedArchives.value.$el.style.display == 'flex') {
+        importArchive.value.$el.style.display = 'flex';
+        importedArchives.value.$el.style.display = 'none';
+    }
 };
 </script>
 
@@ -53,6 +58,7 @@ const showImportedArchives = () => {
         <arquivosImportados
         ref="importedArchives"
         class="importedArchives"
+        @showImportedArchives="showImportedArchives"
         />
     </div>
 </template>

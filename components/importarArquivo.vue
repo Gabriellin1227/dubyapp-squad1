@@ -31,7 +31,7 @@ const handleAreaClick = (event) => {
     }
 
     emit('showImportedArchives');
-}
+};
 
 const removeArchive = () => {
     archive.value = null;
@@ -82,7 +82,7 @@ const removeArchive = () => {
                         </svg>
                         <div class="textoUpload" v-if="archive">
                             <div class="textoPrincipal">
-                                Arquivo: {{ archive.name }}
+                                {{ archive.name }}
                             </div>
                             <button @click.stop.prevent="removeArchive" class="remove-archive-button">x</button>
                         </div>
