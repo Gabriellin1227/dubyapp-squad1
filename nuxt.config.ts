@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   pages: true,
+  app: {
+    head: {
+      title: 'Sistema de Conciliação - Duby'
+    }
+  },
 
   modules: [
     '@nuxt/content',
@@ -12,7 +17,6 @@ export default defineNuxtConfig({
     'usebootstrap',
     '@nuxtjs/google-fonts'
   ],
-
   googleFonts: {
     families: {
       Inter: true,

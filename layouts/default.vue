@@ -492,6 +492,11 @@ main {
     padding: var(--spacing-lg);
 
     background-color: var(--background);
+
+    .main-container {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .small-screen-message {
