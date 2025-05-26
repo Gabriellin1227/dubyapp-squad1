@@ -1,62 +1,76 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 const emit = defineEmits(['showImportedArchives']);
 const showingImporteds = ref(false);
-
+const archive = ref<File | null>(null);
+const archiveInput = ref<HTMLInputElement | null>(null);
+const showModal = ref(false);
+const selectedArchive = ref(null);
 const importedArchives = [
   {
-    name: 'arquivo001.ofx',
+    name: 'arquivo001',
+    type: 'OFX',
+    size: '12MB',
     period: '01.04.2024 - 02.05.2024',
     importDate: '03.05.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'transacoes_fevereiro.csv',
+    name: 'transacoes_fevereiro',
+    type: 'CSV',
+    size: '8MB',
     period: '01.02.2024 - 29.02.2024',
     importDate: '01.03.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'recebimentos_marco.ofx',
+    name: 'recebimentos_marco',
+    type: 'OFX',
+    size: '25MB',
     period: '01.03.2024 - 31.03.2024',
     importDate: '02.04.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'clientes_novos.csv',
+    name: 'clientes_novos',
+    type: 'CSV',
+    size: '15MB',
     period: '15.03.2024 - 15.04.2024',
     importDate: '16.04.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'movimentacao_banco.ofx',
+    name: 'movimentacao_banco',
+    type: 'OFX',
+    size: '42MB',
     period: '10.04.2024 - 30.04.2024',
     importDate: '01.05.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'relatorio_maio.csv',
+    name: 'relatorio_maio',
+    type: 'CSV',
+    size: '33MB',
     period: '01.05.2024 - 20.05.2024',
     importDate: '21.05.2024',
     importedBy: 'Jonathan Curvelo'
   },
   {
-    name: 'relatorio_maio.csv',
+    name: 'relatorio_maio',
+    type: 'CSV',
+    size: '33MB',
     period: '01.05.2024 - 20.05.2024',
     importDate: '21.05.2024',
     importedBy: 'Jonathan Curvelo'
   }
 ];
 
-import { ref } from 'vue';
-
 defineProps({
     title: String,
     labelSelector: String,
     options: Array
 });
-
-const archive = ref<File | null>(null);
-const archiveInput = ref<HTMLInputElement | null>(null);
 
 const handleDrop = (/** @type {DragEvent} */ event) => {
     const files = event.dataTransfer?.files;
@@ -82,6 +96,15 @@ const toggleArea = () => {
   showingImporteds.value = !showingImporteds.value;
 };
 
+const openModal = (archive) => {
+    selectedArchive.value = archive;
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    selectedArchive.value = null;
+};
 </script>
 
 <template>
@@ -124,7 +147,7 @@ const toggleArea = () => {
             <div id="tableImportedContainer" class="table-container" tabindex="-1" v-show="showingImporteds">
                 <table>
                     <tbody>
-                        <tr v-for="archive in importedArchives">
+                        <tr v-for="(archive, index) in importedArchives" :key="index">
                             <td>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                     <path fill="#F6F6F6" d="M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2m7 2h8v2h-8zm0 4h8v2h-8zm0 4h8v2h-8zM6 7h2v2H6zm0 4h2v2H6zm0 4h2v2H6z" />
@@ -135,7 +158,7 @@ const toggleArea = () => {
                             <td>{{ archive.importDate }}</td>
                             <td>{{ archive.importedBy }}</td>
                             <td>
-                                <a href="#">
+                                <a href="#" @click.prevent="openModal(archive)">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
                                         <g fill="none" stroke="#C5BED7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" color="#C5BED7">
                                             <path d="M21.544 11.045c.304.426.456.64.456.955c0 .316-.152.529-.456.955C20.178 14.871 16.689 19 12 19c-4.69 0-8.178-4.13-9.544-6.045C2.152 12.529 2 12.315 2 12c0-.316.152-.529.456-.955C3.822 9.129 7.311 5 12 5c4.69 0 8.178 4.13 9.544 6.045" />
@@ -147,6 +170,43 @@ const toggleArea = () => {
                         </tr>
                     </tbody>
                 </table>
+
+                <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+                    <dialog open class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title">Arquivo importado</div>
+                                <button @click="closeModal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                                        <path fill="none" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m5 19l7-7m0 0l7-7m-7 7L5 5m7 7l7 7" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="modal-archive-description">
+                                <div class="modal-name-container">
+                                    <div class="modal-info-name">{{ selectedArchive.name }}</div>
+                                    <div class="edit-info-name">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                            <g fill="none" stroke="#412884" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
+                                                <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
+                                                <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="modal-info"><strong>Tipo:</strong> {{ selectedArchive.type }}</div>
+                                <div class="modal-info"><strong>Tamanho:</strong> {{ selectedArchive.size }}</div>
+                                <div class="modal-info"><strong>Período:</strong> {{ selectedArchive.period }}</div>
+                                <div class="modal-info"><strong>Data de importação:</strong> {{ selectedArchive.importDate }}</div>
+                                <div class="modal-info"><strong>Importado por:</strong> {{ selectedArchive.importedBy }}</div>
+                            </div>
+                            <div class="modal-buttons">
+                                <button>Excluir</button>
+                                <button>Baixar</button>
+                            </div>
+                        </div>
+                    </dialog>
+                </div>
             </div>
             <div id="fieldUpload" class="areaDeUpload" @dragover.prevent @dragenter.prevent @drop.prevent="handleDrop" v-show="!showingImporteds">
                 <label
@@ -163,7 +223,18 @@ const toggleArea = () => {
                         <div class="textoPrincipal">
                             {{ archive.name }}
                         </div>
-                        <button @click.stop.prevent="removeArchive" class="remove-archive-button">x</button>
+                        <div class="action-button-upload">
+                            <button @click.stop.prevent="removeArchive" class="remove-archive-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="24" viewBox="0 0 24 24">
+                                    <path fill="none" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m5 19l7-7m0 0l7-7m-7 7L5 5m7 7l7 7" />
+                                </svg>
+                            </button>
+                            <button @click="toggleArea" class="remove-archive-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="#F6F6F6" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z" stroke-width="0." stroke="#F6F6F6" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div class="textoUpload" v-else>
                         <div class="textoPrincipal">
@@ -596,5 +667,137 @@ main {
 
 #botao2:focus {
     outline: 2px solid var(--comp-4);
+}
+
+.action-button-upload {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.modal-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+
+    width: calc(100vw - 256px);
+    height: var(--total-height);
+
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-dialog {
+    all: unset;
+    z-index: 1000;
+
+    height: 320px;
+    width: 424px;
+
+    padding: 40px;
+
+    background-color: var(--background);
+
+    border-radius: 20px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    height: 100%;
+    width: 100%;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+
+    .modal-title {
+        color: var(--principal);
+        font-size: 28px;
+        font-weight: 600;
+    }
+
+    button {
+        height: 28px;
+        width: 28px;
+
+        background-color: var(--principal);
+
+        border-radius: 5px;
+        border: 0;
+    }
+}
+
+.modal-archive-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    height: min-content;
+    width: 100%;
+
+    .modal-name-container {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+
+        height: 32px;
+
+        .modal-info-name {
+            color: var(--principal);
+            font-size: var(--font-slg);
+            font-weight: 600;
+        }
+    }
+
+    .modal-info {
+        display: flex;
+        align-items: center;
+
+        height: 24px;
+
+        color: rgb(18, 40, 63, 0.6);
+    }
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+
+    height: 40px;
+    width: 100%;
+
+    button {
+        height: 100%;
+        width: 104px;
+
+        border-radius: 5px;
+    }
+
+    button:nth-of-type(1) {
+        color: var(--principal);
+
+        border: 1px solid var(--principal);
+    }
+
+    button:nth-of-type(2) {
+        color: var(--background);
+
+        background-color: var(--principal);
+
+        border: 0;
+    }
 }
 </style>
