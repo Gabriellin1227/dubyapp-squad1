@@ -6,7 +6,17 @@ const showingImporteds = ref(false);
 const archive = ref<File | null>(null);
 const archiveInput = ref<HTMLInputElement | null>(null);
 const showModal = ref(false);
-const selectedArchive = ref(null);
+const selectedArchive = ref<Archive | null>(null);
+
+interface Archive {
+  name: string;
+  type: string;
+  size: string;
+  period: string;
+  importDate: string;
+  importedBy: string;
+}
+
 const importedArchives = [
   {
     name: 'arquivo001',
@@ -72,7 +82,7 @@ defineProps({
     options: Array
 });
 
-const handleDrop = (/** @type {DragEvent} */ event) => {
+const handleDrop = (event: DragEvent) => {
     const files = event.dataTransfer?.files;
     if(files && files.length) {
         archive.value = files[0];
@@ -93,10 +103,10 @@ const removeArchive = () => {
 
 
 const toggleArea = () => {
-  showingImporteds.value = !showingImporteds.value;
+    showingImporteds.value = !showingImporteds.value;
 };
 
-const openModal = (archive) => {
+const openModal = (archive: Archive) => {
     selectedArchive.value = archive;
     showModal.value = true;
 };
@@ -184,7 +194,7 @@ const closeModal = () => {
                             </div>
                             <div class="modal-archive-description">
                                 <div class="modal-name-container">
-                                    <div class="modal-info-name">{{ selectedArchive.name }}</div>
+                                    <div class="modal-info-name">{{ selectedArchive?.name }}</div>
                                     <div class="edit-info-name">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
                                             <g fill="none" stroke="#412884" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5">
@@ -194,11 +204,11 @@ const closeModal = () => {
                                         </svg>
                                     </div>
                                 </div>
-                                <div class="modal-info"><strong>Tipo:</strong> {{ selectedArchive.type }}</div>
-                                <div class="modal-info"><strong>Tamanho:</strong> {{ selectedArchive.size }}</div>
-                                <div class="modal-info"><strong>Período:</strong> {{ selectedArchive.period }}</div>
-                                <div class="modal-info"><strong>Data de importação:</strong> {{ selectedArchive.importDate }}</div>
-                                <div class="modal-info"><strong>Importado por:</strong> {{ selectedArchive.importedBy }}</div>
+                                <div class="modal-info"><strong>Tipo:</strong> {{ selectedArchive?.type }}</div>
+                                <div class="modal-info"><strong>Tamanho:</strong> {{ selectedArchive?.size }}</div>
+                                <div class="modal-info"><strong>Período:</strong> {{ selectedArchive?.period }}</div>
+                                <div class="modal-info"><strong>Data de importação:</strong> {{ selectedArchive?.importDate }}</div>
+                                <div class="modal-info"><strong>Importado por:</strong> {{ selectedArchive?.importedBy }}</div>
                             </div>
                             <div class="modal-buttons">
                                 <button>Excluir</button>
@@ -244,7 +254,6 @@ const closeModal = () => {
                             Arquivo CSV ou OFX de até 50MB
                         </div>
                     </div>
-                    <!-- Input  -->
                     <input
                     type="file"
                     id="inputArquivosimportados"

@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-defineProps({
-    title: String,
-    labelSelector: String,
-    options: Array
-});
+defineProps<{
+    title: string;
+    labelSelector: string;
+    options: string[];
+}>();
 
 const emit = defineEmits(['next', 'back', 'showImportedArchives']);
 const archive = ref<File | null>(null);
 const archiveInput = ref<HTMLInputElement | null>(null);
+const showModal = ref(false);
+const router = useRouter();
 
-const handleDrop = (/** @type {DragEvent} */ event) => {
+const handleDrop = (event: DragEvent) => {
     const files = event.dataTransfer?.files;
     if(files && files.length) {
         archive.value = files[0];
@@ -25,7 +28,7 @@ const handleFileInput = (event: Event) => {
     }
 };
 
-const handleAreaClick = (event) => {
+const handleAreaClick = (event: MouseEvent) => {
     if (archive.value) {
         return;
     }
@@ -37,10 +40,34 @@ const removeArchive = () => {
     archive.value = null;
     if (archiveInput.value) archiveInput.value.value = '';
 };
+
+const openModal = () => {
+    showModal.value = true;
+};
+
+const newReconcile = () => {
+    router.back();
+};
 </script>
 
 <template>
     <div class="container">
+        <div v-if="showModal" class="modal-overlay">
+            <dialog open class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title">Conciliação realizada</div>
+                    </div>
+                    <div class="modal-description">
+                        Conciliação finalizada. Você pode consultá-la agora ou iniciar uma nova.
+                    </div>
+                    <div class="modal-buttons">
+                        <button @click="newReconcile">Voltar</button>
+                        <button>Ir para consultas</button>
+                    </div>
+                </div>
+            </dialog>
+        </div>
         <div class="content-wrapper">
         <div class="titulo">{{ title }}</div>
 
@@ -59,7 +86,6 @@ const removeArchive = () => {
                 </svg>
                 </div>
             </div>
-            <!-- Input de arquivo -->
             <div class="seletorArquivo">
                 <div>
                 <h2>Importar Arquivo</h2>
@@ -94,7 +120,6 @@ const removeArchive = () => {
                                 Arquivo CSV ou OFX de até 50MB
                             </div>
                         </div>
-                        <!-- Input  -->
                         <input
                         type="file"
                         id="inputArquivo"
@@ -106,10 +131,10 @@ const removeArchive = () => {
                 </div>
             </div>
         </div>
-
         <div class="botao">
-            <button id="botao1" v-if="labelSelector == 'Adquirente'" @click="emit('back')">Cancelar</button>
-            <button id="botao2" @click="emit('next')">Próximo</button>
+            <button class="importButton" v-if="labelSelector == 'Adquirente'" @click="emit('back')">Cancelar</button>
+            <button class="importButton" v-if="labelSelector != 'Adquirente'" @click="emit('next')">Próximo</button>
+            <button class="importButton" v-if="labelSelector == 'Adquirente'" @click="openModal">Conciliar</button>
         </div>
         </div>
     </div>
@@ -360,7 +385,7 @@ const removeArchive = () => {
     outline: 2px solid var(--comp-4);
 }
 
-#botao2 {
+.importButton {
 
     width: 152px;
     height: 56px;
@@ -382,12 +407,105 @@ const removeArchive = () => {
     transition: outline 0.3s ease-in-out;
 }
 
-#botao2:hover {
+.importButton:hover {
     cursor: pointer;
     background-color: #e6e6e6;
 }
 
-#botao2:focus {
+.importButton:focus {
     outline: 2px solid var(--comp-4);
+}
+
+.modal-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+
+    width: calc(100vw - 256px);
+    height: var(--total-height);
+
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-dialog {
+    all: unset;
+    z-index: 1000;
+
+    width: 424px;
+
+    padding: 40px;
+
+    background-color: var(--background);
+
+    border-radius: 20px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 40px;
+    width: 100%;
+
+    .modal-title {
+        color: var(--principal);
+        font-size: 28px;
+        font-weight: 600;
+    }
+}
+
+.modal-description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+
+    height: min-content;
+    width: 100%;
+
+    color: var(--texto);
+    font-size: var(--font-snd);
+    text-align: center;
+
+    padding: 24px 0;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+
+    height: 40px;
+    width: 100%;
+
+    button {
+        height: 100%;
+        width: 144px;
+
+        padding: 0 16px;
+
+        font-size: var(--font-snd);
+
+        border-radius: 5px;
+    }
+
+    button:nth-of-type(1) {
+        color: var(--principal);
+
+        border: 1px solid var(--principal);
+    }
+
+    button:nth-of-type(2) {
+        color: var(--background);
+
+        background-color: var(--principal);
+
+        border: 0;
+    }
 }
 </style>
