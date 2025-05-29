@@ -42,7 +42,6 @@ function handleClickOutside(event) {
 
 <template>
     <header>
-        <!-- Elementos (left to right): logo / pesquisa / notificação / ajuda / configuração / menu-perfil -->
          <div class="logo-container">
             <a href="#home" tabindex="-1">
                 <img src="../assets/images/logo-duby-header.png" alt="Logo Branca da Duby">
@@ -91,7 +90,6 @@ function handleClickOutside(event) {
          </div>
     </header>
     <aside>
-        <!-- Elementos (top to bottom): foto-perfil / nome / cargo / módulos / exit -->
          <div id="menu-profile">
             <img src="../assets/images/photo-pexels.jpg" alt="Foto de Perfil">
             <div id="profile-info">
@@ -492,6 +490,11 @@ main {
     padding: var(--spacing-lg);
 
     background-color: var(--background);
+
+    .main-container {
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .small-screen-message {
