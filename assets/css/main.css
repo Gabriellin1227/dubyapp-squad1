@@ -38,6 +38,10 @@
     --total-height: calc(100vh - 80px);
 }
 
+a {
+    text-decoration: none;
+}
+
 @media screen and (max-height: 770px), (max-width: 1439px) {
     body {
         background-color: var(--principal);

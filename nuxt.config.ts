@@ -5,10 +5,12 @@ export default defineNuxtConfig({
   pages: true,
   app: {
     head: {
-      title: 'Sistema de Conciliação - Duby'
-    }
+      title: 'Sistema de Conciliação - Duby',
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      ]
+    },
   },
-
   modules: [
     '@nuxt/content',
     '@nuxt/image',
@@ -27,5 +29,5 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     "/": { redirect: "/dashboard"},
-  }
+  },
 })

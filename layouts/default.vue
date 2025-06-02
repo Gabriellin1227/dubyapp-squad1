@@ -44,7 +44,7 @@ function handleClickOutside(event) {
     <header>
          <div class="logo-container">
             <a href="#home" tabindex="-1">
-                <img src="../assets/images/logo-duby-header.png" alt="Logo Branca da Duby">
+                <img src="/assets/images/logo-duby-header.png" alt="Logo Branca da Duby">
             </a>
          </div>
          <div class="header-actions">
@@ -83,7 +83,7 @@ function handleClickOutside(event) {
                 </div>
                 <div id="profile-settings" class="action-button">
                     <a href="" id="menu-toggle" @click.prevent="toggleMenu">
-                        <img src="../assets/images/photo-pexels.jpg" alt="Foto de Perfil">
+                        <img src="/assets/images/photo-pexels.jpg" alt="Foto de Perfil">
                     </a>
                 </div>
             </div>
@@ -91,7 +91,7 @@ function handleClickOutside(event) {
     </header>
     <aside>
          <div id="menu-profile">
-            <img src="../assets/images/photo-pexels.jpg" alt="Foto de Perfil">
+            <img src="/assets/images/photo-pexels.jpg" alt="Foto de Perfil">
             <div id="profile-info">
                 <div id="username">Jonathan Curvelo</div>
                 <div id="userwork">Gestor Financeiro</div>
