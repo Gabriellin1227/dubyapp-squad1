@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+import menuGestaoContas1 from '~/components/menuGestaoContas.vue';
+
+</script>
 
 <template>
-    <p>Tela de gestão de contas.</p>
+        <menuGestaoContas1 />
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
