@@ -21,7 +21,34 @@ const closeModal = () => {
                     <button @click="closeModal">x</button>
                 </div>
                 <div class="modal-main">
-                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">Ordenar</div>
+                        <div class="modal-section-options">
+                            <button><div class="highlight-point" />Data</button>
+                            <button><div class="highlight-point" />Total vendido</button>
+                            <button><div class="highlight-point" />Total recebido</button>
+                            <button><div class="highlight-point" />Divergência</button>
+                        </div>
+                    </div>
+                    <div class="modal-section">
+                        <div class="modal-section-title">Data da conciliação</div>
+                        <div class="modal-section-options">
+                            <input type="date" name="data-conciliacao" id="iReconcileData">
+                        </div>
+                    </div>
+                    <div class="modal-section">
+                        <div class="modal-section-title">Período</div>
+                        <div class="modal-section-options">
+                            <div>
+                                <label for="iInitalDate">Início</label>
+                                <input type="date" name="" id="">
+                            </div>
+                            <div>
+                                <label for="iFinalDate">Fim</label>
+                                <input type="date" name="" id="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-buttons">
                     <button>Limpar</button>
@@ -192,6 +219,91 @@ const closeModal = () => {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    color: var(--texto);
+
+    .modal-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+
+        width: 100%;
+
+        .modal-section-options {
+            display: flex;
+            flex-flow: row wrap;
+            gap: 16px;
+
+            button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+
+                height: 40px;
+                padding: 8px 16px;
+
+                color: rgba(18, 40, 64, 0.8);
+                font-size: 14px;
+                
+                background-color: rgba(65, 40, 132, 0.05);
+
+                border: 1px solid transparent;
+                border-radius: 5px;
+                transition: border-color 0.5 ease;
+
+                .highlight-point {
+                    height: 6px;
+                    width: 6px;
+
+                    background-color: rgba(18, 40, 64, 0.5);
+
+                    border-radius: 15px;
+                }
+            }
+
+            button:hover, .button-active {
+                color: var(--principal);
+                border: 1px solid var(--principal);
+
+                .highlight-point {
+                    background-color: var(--principal);
+                }
+            }
+            
+            input[type="date"] {
+                background-color: rgba(65, 40, 132, 0.05);
+                border: 1px solid transparent;
+                border-radius: 8px;
+                padding: 8px 12px;
+                font-size: 14px;
+                color: #374151;
+                font-family: sans-serif;
+                outline: none;
+                box-shadow: none;
+                transition: background-color 0.2s ease;
+                cursor: pointer;
+            }
+
+            input[type="date"]:hover {
+                border: 1px solid var(--principal);
+            }
+        }
+    }
+
+    .modal-section:last-of-type {
+        .modal-section-options {
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                color: var(--texto);
+                font-size: 14px;
+            }
+        }
+    }
 }
 
 .modal-header {
@@ -237,7 +349,7 @@ const closeModal = () => {
         font-weight: 500;
 
         border: 0;
-        border-radius: 5px;
+        border-radius: 8px;
 
         transition: background-color 0.3s ease;
     }
