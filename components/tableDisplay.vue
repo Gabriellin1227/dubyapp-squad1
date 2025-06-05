@@ -5,38 +5,122 @@ const emit = defineEmits(['update:modelValue']);
 
 const reconcileHistory = [
     {
-        date: '23/02/2025',
-        id: '#250323-01',
+        date: '23/03/2025',
+        id: '250323-01',
         period: '01/02 - 20/03',
-        analyst: 'Jonathan Curvelo',
+        analyst: 'Ana Souza',
         acquirer: 'Stone',
         bank: 'Santander',
-        totalSold: 'R$ 212.000,00',
-        totalReceived: 'R$ 200.000,00',
+        totalSold: 'R$ 150.000,00',
+        totalReceived: 'R$ 148.000,00',
         divergence: 'R$ 2.000,00',
         status: 'Em conciliação'
     },
     {
-        date: '15/03/2025',
-        id: '#250323-02',
+        date: '01/04/2025',
+        id: '250401-01',
         period: '01/03 - 31/03',
+        analyst: 'Marcos Silva',
+        acquirer: 'Rede',
+        bank: 'Bradesco',
+        totalSold: 'R$ 200.000,00',
+        totalReceived: 'R$ 200.000,00',
+        divergence: 'R$ 0,00',
+        status: 'Conciliada'
+    },
+    {
+        date: '05/04/2025',
+        id: '250405-01',
+        period: '10/03 - 30/03',
         analyst: 'Fernanda Lima',
         acquirer: 'Cielo',
-        bank: 'Bradesco',
+        bank: 'Banco do Brasil',
         totalSold: 'R$ 180.000,00',
-        totalReceived: 'R$ 175.500,00',
-        divergence: 'R$ 500,00',
+        totalReceived: 'R$ 177.500,00',
+        divergence: 'R$ 2.500,00',
         status: 'Não conciliada'
     },
     {
-        date: '28/03/2025',
-        id: '#250323-03',
-        period: '10/03 - 25/03',
-        analyst: 'Carlos Mendes',
-        acquirer: 'Rede',
-        bank: 'Banco do Brasil',
+        date: '06/04/2025',
+        id: '250406-01',
+        period: '15/03 - 31/03',
+        analyst: 'Lucas Amaral',
+        acquirer: 'Getnet',
+        bank: 'Itaú',
         totalSold: 'R$ 95.000,00',
         totalReceived: 'R$ 95.000,00',
+        divergence: 'R$ 0,00',
+        status: 'Conciliada'
+    },
+    {
+        date: '06/04/2025',
+        id: '250406-02',
+        period: '01/03 - 25/03',
+        analyst: 'Julia Mendes',
+        acquirer: 'Stone',
+        bank: 'Santander',
+        totalSold: 'R$ 210.000,00',
+        totalReceived: 'R$ 208.000,00',
+        divergence: 'R$ 2.000,00',
+        status: 'Em conciliação'
+    },
+    {
+        date: '10/04/2025',
+        id: '250410-01',
+        period: '01/04 - 07/04',
+        analyst: 'Bruno Costa',
+        acquirer: 'Cielo',
+        bank: 'Bradesco',
+        totalSold: 'R$ 70.000,00',
+        totalReceived: 'R$ 69.700,00',
+        divergence: 'R$ 300,00',
+        status: 'Não conciliada'
+    },
+    {
+        date: '15/04/2025',
+        id: '250415-01',
+        period: '01/03 - 31/03',
+        analyst: 'Marina Torres',
+        acquirer: 'Rede',
+        bank: 'Banco do Brasil',
+        totalSold: 'R$ 160.000,00',
+        totalReceived: 'R$ 160.000,00',
+        divergence: 'R$ 0,00',
+        status: 'Conciliada'
+    },
+    {
+        date: '15/04/2025',
+        id: '250415-02',
+        period: '05/03 - 25/03',
+        analyst: 'Thiago Alves',
+        acquirer: 'Getnet',
+        bank: 'Caixa',
+        totalSold: 'R$ 140.000,00',
+        totalReceived: 'R$ 138.000,00',
+        divergence: 'R$ 2.000,00',
+        status: 'Em conciliação'
+    },
+    {
+        date: '18/04/2025',
+        id: '250418-01',
+        period: '01/04 - 10/04',
+        analyst: 'Camila Ribeiro',
+        acquirer: 'Cielo',
+        bank: 'Santander',
+        totalSold: 'R$ 120.000,00',
+        totalReceived: 'R$ 119.000,00',
+        divergence: 'R$ 1.000,00',
+        status: 'Não conciliada'
+    },
+    {
+        date: '20/04/2025',
+        id: '250420-01',
+        period: '01/03 - 31/03',
+        analyst: 'Rodrigo Lima',
+        acquirer: 'Stone',
+        bank: 'Bradesco',
+        totalSold: 'R$ 250.000,00',
+        totalReceived: 'R$ 250.000,00',
         divergence: 'R$ 0,00',
         status: 'Conciliada'
         // como o link de "ações" será feito a partir do id, não adicionei url.
@@ -116,7 +200,7 @@ const toggleRow = (id) => {
                         </label>
                     </td>
                     <td>{{ row.date }}</td>
-                    <td>{{ row.id }}</td>
+                    <td>{{ "#" + row.id }}</td>
                     <td>{{ row.period }}</td>
                     <td>{{ row.analyst }}</td>
                     <td>{{ row.acquirer }}</td>
@@ -126,12 +210,14 @@ const toggleRow = (id) => {
                     <td>{{ row.divergence }}</td>
                     <td><div class="status-reconcile" :class="reconcileStatus(row.status)">{{ row.status }}</div></td>
                     <td>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                            <g fill="none" stroke="#6D7A88" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="#6D7A88">
-                                <path d="M21.544 11.045c.304.426.456.64.456.955c0 .316-.152.529-.456.955C20.178 14.871 16.689 19 12 19c-4.69 0-8.178-4.13-9.544-6.045C2.152 12.529 2 12.315 2 12c0-.316.152-.529.456-.955C3.822 9.129 7.311 5 12 5c4.69 0 8.178 4.13 9.544 6.045" />
-                                <path d="M15 12a3 3 0 1 0-6 0a3 3 0 0 0 6 0" />
-                            </g>
-                        </svg>
+                        <NuxtLink :to="`/consultas/${row.id}`">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                                <g fill="none" stroke="#6D7A88" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="#6D7A88">
+                                    <path d="M21.544 11.045c.304.426.456.64.456.955c0 .316-.152.529-.456.955C20.178 14.871 16.689 19 12 19c-4.69 0-8.178-4.13-9.544-6.045C2.152 12.529 2 12.315 2 12c0-.316.152-.529.456-.955C3.822 9.129 7.311 5 12 5c4.69 0 8.178 4.13 9.544 6.045" />
+                                    <path d="M15 12a3 3 0 1 0-6 0a3 3 0 0 0 6 0" />
+                                </g>
+                            </svg>
+                        </NuxtLink>
                     </td>
                 </tr>
             </tbody>

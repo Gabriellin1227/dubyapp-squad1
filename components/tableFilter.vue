@@ -8,19 +8,19 @@ const emit = defineEmits(['handlerModal']);
         <select name="period" id="period">
             <option value="" disabled selected>Período</option>
             <option value="lastWeek">Última semana</option>
-            <option value="lastMonth" selected>Último mês</option>
-            <option value="lastTwoMonth" selected>Últimos dois meses</option>
+            <option value="lastMonth">Último mês</option>
+            <option value="lastTwoMonth">Últimos dois meses</option>
             <option value="lastSemester">Último semestre</option>
         </select>
         <select name="status" id="status">
             <option value="" disabled selected>Status</option>
-            <option value="noReconciled" selected>Não conciliada</option>
+            <option value="noReconciled">Não conciliada</option>
             <option value="inReconciliation">Em conciliação</option>
             <option value="reconciled">Conciliada</option>
         </select>
         <select name="acquirer" id="acquirer">
             <option value="" disabled selected>Adquirente</option>
-            <option value="stone" selected>Stone</option>
+            <option value="stone">Stone</option>
             <option value="bin">Bin</option>
             <option value="sumup">Sumup</option>
             <option value="getnet">GetNet</option>
