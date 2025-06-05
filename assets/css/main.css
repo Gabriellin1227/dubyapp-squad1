@@ -11,7 +11,7 @@
 
     --texto: #12283F;
     --input: rgba(65, 40, 132, 0.1);
-    --placeholder: hsla(211, 56%, 16%, 0.8);
+    --placeholder: rgba(18, 40, 64, 0.8);
 
     /* Fontes */
 
@@ -36,6 +36,10 @@
     /* Altura total */
 
     --total-height: calc(100vh - 80px);
+}
+
+a {
+    text-decoration: none;
 }
 
 @media screen and (max-height: 770px), (max-width: 1439px) {
