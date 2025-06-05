@@ -17,9 +17,13 @@ export interface Banco {
     status: BancoStatus;
     observacoes: string;
     logo_url: string;
-    criado_em: Date; 
+    criado_em: Date;
 }
 
 export const getAllBancos = async (): Promise<Banco[]> => {
     return await $fetch(`${BASE_URL}/bancos`);
+};
+
+export const getBancosById = async (id: number): Promise<Banco> => {
+    return await $fetch(`${BASE_URL}/bancos/id/${id}`);
 };
