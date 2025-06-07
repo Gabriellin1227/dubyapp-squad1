@@ -2,10 +2,10 @@
     <div class="container-principal">
         <div class="tab-principal">
             <div class="titulo-banco">
-                <h1>{{ banco?.razao_social }}</h1>
+                <h1>{{ adquirentes?.razao_social }}</h1>
             </div>
             <div class="menu-interativo">
-                <statusToggle v-if="banco?.id && banco?.status" :id="banco?.id" :statusInicial="banco?.status" />
+                <statusToggle v-if="adquirentes?.id && adquirentes?.status" :id="adquirentes?.id" :statusInicial="adquirentes?.status" />
                 <button class="icon-button">
                     <svg width="24" height="24" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_1162_128)">
@@ -58,19 +58,19 @@
             </div>
             <div class="container-banco">
                 <div class="img-banco">
-                    <img :src="banco?.logo_url" alt="Logo" />
+                    <img :src="adquirentes?.logo_url" alt="Logo" />
                 </div>
                 <div class="nome-banco">
-                    <h6>{{ banco?.nome }}</h6>
-                    <p>{{ banco?.razao_social }}</p>
+                    <h6>{{ adquirentes?.nome }}</h6>
+                    <p>{{ adquirentes?.razao_social }}</p>
                 </div>
                 <div class="cnpj-banco">
-                    <h6>CNPJ</h6>
-                    <p>{{ banco?.cnpj }}</p>
+                    <h6>Conta de Repasse</h6>
+                    <p>{{ adquirentes?.conta_transferencia }}</p>
                 </div>
                 <div class="cod-banco">
-                    <h6>Código do banco</h6>
-                    <p>{{ banco?.codigo }}</p>
+                    <h6>CNPJ</h6>
+                    <p>{{ adquirentes?.cnpj }}</p>
                 </div>
             </div>
         </div>
@@ -82,11 +82,11 @@
             <div class="container-empresa">
                 <div class="agencia-banco">
                     <p>Agência</p>
-                    <p>{{ banco?.agencia }}</p>
+                    <p>{{ adquirentes?.agencia }}</p>
                 </div>
                 <div class="cc-banco">
                     <p>Conta Corrente</p>
-                    <p>{{ banco?.conta_corrente }}</p>
+                    <p>{{ adquirentes?.conta_corrente }}</p>
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
             </div>
             <div class="container-obs">
                 <div class="obs-banco">
-                    <p>{{ banco?.observacoes }}</p>
+                    <p>{{ adquirentes?.observacoes }}</p>
                 </div>
             </div>
         </div>
@@ -110,22 +110,23 @@ import { useRoute } from 'vue-router';
 import { getBancosById, type Banco } from '~/services/bancoService';
 import statusToggle from '~/components/banco-adquirente/statusToggle.vue';
 import { useRouter } from 'vue-router';
+import { getAdquirentesById, type Adquirentes } from '~/services/adquirentesService';
 
 const route = useRoute();
-const banco = ref<Banco | null>(null);
+const adquirentes = ref<Adquirentes | null>(null);
 const router = useRouter();
 
-const fetchBanco = async () => {
+const fetchAdquirentes = async () => {
     const id = Number(route.params.id);
     try {
-        banco.value = await getBancosById(id);
+        adquirentes.value = await getAdquirentesById(id);
     } catch (error) {
-        console.error('Erro ao buscar banco:', error);
+        console.error('Erro ao buscar Adquirente:', error);
     }
 };
 
 onMounted(() => {
-    fetchBanco();
+    fetchAdquirentes();
 });
 
 const voltar = () => {

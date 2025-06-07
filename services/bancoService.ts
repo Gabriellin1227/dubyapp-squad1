@@ -27,3 +27,16 @@ export const getAllBancos = async (): Promise<Banco[]> => {
 export const getBancosById = async (id: number): Promise<Banco> => {
     return await $fetch(`${BASE_URL}/bancos/id/${id}`);
 };
+
+export async function buscarBancoPorNome(nome: string): Promise<Banco[]> {
+    const response = await fetch(`http://localhost:3001/duby/bancos/nome/${encodeURIComponent(nome)}`)
+    if (!response.ok) throw new Error('Erro ao buscar banco por nome')
+    return await response.json()
+}
+
+export const updateBancoStatus = async (id: number, status: BancoStatus) => {
+    return await $fetch(`${BASE_URL}/bancos/${id}/status`, {
+        method: 'PUT',
+        body: { status }
+    })
+}

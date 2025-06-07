@@ -2,11 +2,11 @@
 
     <div class="container-1">
         <div class="tabs">
-            <button :class="['toggle-button', selected === 'bancos' ? 'active' : '']" @click="selected = 'bancos'">
+            <button :class="['toggle-button', {ativo: mostrar === 'bancos'}]"@click="mudarToggle('bancos')">
                 Bancos
             </button>
-            <button :class="['toggle-button', selected === 'adquirentes' ? 'active' : '']"
-                @click="selected = 'adquirentes'">
+            <button :class="['toggle-button', {ativo: mostrar === 'adquirentes'}]"
+                @click="mudarToggle('adquirentes')">
                 Adquirentes
             </button>
         </div>
@@ -49,13 +49,20 @@
 
 <script setup>
 import { ref } from 'vue'
+import { defineEmits } from 'vue'
 
-const selected = ref('bancos')
+const mostrar = ref('bancos') // estado interno só para UI se quiser
+
+const emit = defineEmits(['toggleTabela'])
+
+function mudarToggle(valor) {
+    mostrar.value = valor
+    emit('toggleTabela', valor)
+}
 </script>
 
 <style lang="scss" scoped>
-
-.container-1 { 
+.container-1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -115,7 +122,7 @@ const selected = ref('bancos')
     transition: background-color 0.3s, color 0.3s;
 }
 
-.toggle-button.active {
+.toggle-button.ativo {
     background-color: var(--principal);
     color: white;
 }

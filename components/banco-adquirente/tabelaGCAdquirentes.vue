@@ -4,16 +4,18 @@
             <thead>
                 <tr>
                     <th>
-                        <div class="thinput"><input type="checkbox" /></div>
+                        <div class="thinput">
+                            <input type="checkbox"/>
+                        </div>
                     </th>
                     <th>
                         <div class="thnome">Nome</div>
                     </th>
                     <th>
-                        <div class="thagencia">Agência</div>
+                        <div class="thagencia">Conta de Repasse</div>
                     </th>
                     <th>
-                        <div class="thconta">Conta</div>
+                        <div class="thconta">Representatividade</div>
                     </th>
                     <th>
                         <div class="thstatus">Ativo</div>
@@ -21,27 +23,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="banco in bancos" :key="banco.id">
+                <tr v-for="adquirentes in adquirentes" :key="adquirentes.id">
                     <td>
                         <div class="checkbox-td">
-                            <input type="checkbox" />
+                            <input type="checkbox"/>
                         </div>
                     </td>
                     <td>
-                        <NuxtLink :to="`/bancos/${banco.id}`" class="nome">
-                            <img :src="banco.logo_url" alt="Logo" />
-                            {{ banco.razao_social }}
+                        <NuxtLink :to="`/adquirentes/${adquirentes.id}`" class="nome">
+                            <img :src="adquirentes.logo_url" alt="Logo" />
+                            {{ adquirentes.nome }}
                         </NuxtLink>
                     </td>
                     <td>
-                        <div class="agencia">{{ banco.agencia }}</div>
+                        <div class="agencia">{{ adquirentes.conta_transferencia }}</div>
                     </td>
                     <td>
-                        <div class="conta-corrente">{{ banco.conta_corrente }}</div>
+                        <div class="conta-corrente">{{ adquirentes.cnpj }}</div>
                     </td>
                     <td>
                         <div class="status">
-                            {{ banco.status === 'ativo' ? 'Sim' : 'Não' }}
+                            {{ adquirentes.status === 'ativo' ? 'Sim' : 'Não' }}
                         </div>
                     </td>
                     <td>
@@ -69,22 +71,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { getAllAdquirentes, type Adquirentes } from '~/services/adquirentesService';
 import { getAllBancos, type Banco } from '~/services/bancoService';
 
-const bancos = ref<Banco[]>([]);
+const adquirentes = ref<Adquirentes[]>([]);
 
-const fetchBancos = async () => {
+const fetchAdquirentes = async () => {
     try {
-        bancos.value = await getAllBancos();
+        adquirentes.value = await getAllAdquirentes();
     } catch (error) {
         console.error('Erro ao buscar bancos:', error);
     }
 };
 
 onMounted(() => {
-    fetchBancos();
+    fetchAdquirentes();
 });
+
+defineProps<{ adquirentes: Adquirentes[] }>()
 </script>
 
 <style scoped>
@@ -107,7 +112,7 @@ table {
 tbody {
     display: flex;
     flex-direction: column;
-    padding: 0 0 0 64px;
+    padding: 0 0 0 32px;
     gap: 32px;
     color: #F6F6F6;
 }
@@ -119,7 +124,7 @@ thead tr {
     color: #F6F6F6B2;
     font-weight: 600;
     font-size: var(--font-md);
-    padding: 38px 0 0 64px;
+    padding: 38px 0 0 32px;
 }
 
 .thinput {
@@ -137,7 +142,7 @@ thead tr {
 .thagencia {
     display: flex;
     align-items: center;
-    width: 80px;
+    width: 160px;
 }
 
 .thconta {
@@ -169,8 +174,8 @@ tbody tr {
     align-items: center;
     gap: 48px;
     min-width: 256px;
-    color: inherit;       
-    text-decoration: none; 
+    color: inherit;
+    text-decoration: none;
 }
 
 .nome:hover {
@@ -186,7 +191,7 @@ tbody tr {
 .agencia {
     display: flex;
     align-items: center;
-    width: 80px;
+    width: 160px;
     height: 32px;
 }
 
@@ -200,7 +205,7 @@ tbody tr {
 .status {
     display: flex;
     align-items: center;
-    width: 56px;
+    width: 159px;
     height: 32px;
 }
 
@@ -208,7 +213,6 @@ tbody tr {
     display: flex;
     align-items: center;
     gap: 48px;
-    width: 192px;
     height: 32px;
     justify-content: center;
 }
