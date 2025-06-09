@@ -23,27 +23,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="adquirentes in adquirentes" :key="adquirentes.id">
+                <tr v-for="adquirente in adquirente" :key="adquirente.id">
                     <td>
                         <div class="checkbox-td">
                             <input type="checkbox"/>
                         </div>
                     </td>
                     <td>
-                        <NuxtLink :to="`/adquirentes/${adquirentes.id}`" class="nome">
-                            <img :src="adquirentes.logo_url" alt="Logo" />
-                            {{ adquirentes.nome }}
+                        <NuxtLink :to="`/adquirentes/${adquirente.id}`" class="nome">
+                            <img :src="adquirente.logo_url" alt="Logo" />
+                            {{ adquirente.nome }}
                         </NuxtLink>
                     </td>
                     <td>
-                        <div class="agencia">{{ adquirentes.conta_transferencia }}</div>
+                        <div class="agencia">{{ adquirente.conta_transferencia }}</div>
                     </td>
                     <td>
-                        <div class="conta-corrente">{{ adquirentes.cnpj }}</div>
+                        <div class="conta-corrente">{{ adquirente.cnpj }}</div>
                     </td>
                     <td>
                         <div class="status">
-                            {{ adquirentes.status === 'ativo' ? 'Sim' : 'Não' }}
+                            {{ adquirente.status === 'ativo' ? 'Sim' : 'Não' }}
                         </div>
                     </td>
                     <td>
@@ -75,11 +75,11 @@ import { ref, onMounted, watch } from 'vue';
 import { getAllAdquirentes, type Adquirentes } from '~/services/adquirentesService';
 import { getAllBancos, type Banco } from '~/services/bancoService';
 
-const adquirentes = ref<Adquirentes[]>([]);
+const adquirente = ref<Adquirentes[]>([]);
 
 const fetchAdquirentes = async () => {
     try {
-        adquirentes.value = await getAllAdquirentes();
+        adquirente.value = await getAllAdquirentes();
     } catch (error) {
         console.error('Erro ao buscar bancos:', error);
     }
@@ -88,8 +88,6 @@ const fetchAdquirentes = async () => {
 onMounted(() => {
     fetchAdquirentes();
 });
-
-defineProps<{ adquirentes: Adquirentes[] }>()
 </script>
 
 <style scoped>

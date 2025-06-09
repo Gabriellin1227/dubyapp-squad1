@@ -2,10 +2,11 @@
     <div class="container-principal">
         <div class="tab-principal">
             <div class="titulo-banco">
-                <h1>{{ adquirentes?.razao_social }}</h1>
+                <h1>{{ adquirente?.razao_social }}</h1>
             </div>
             <div class="menu-interativo">
-                <statusToggle v-if="adquirentes?.id && adquirentes?.status" :id="adquirentes?.id" :statusInicial="adquirentes?.status" />
+                <statusToggle v-if="adquirente" :id="adquirente.id" :status-inicial="adquirente.status"
+                    tipo="adquirente" />
                 <button class="icon-button">
                     <svg width="24" height="24" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_1162_128)">
@@ -58,19 +59,19 @@
             </div>
             <div class="container-banco">
                 <div class="img-banco">
-                    <img :src="adquirentes?.logo_url" alt="Logo" />
+                    <img :src="adquirente?.logo_url" alt="Logo" />
                 </div>
                 <div class="nome-banco">
-                    <h6>{{ adquirentes?.nome }}</h6>
-                    <p>{{ adquirentes?.razao_social }}</p>
+                    <h6>{{ adquirente?.nome }}</h6>
+                    <p>{{ adquirente?.razao_social }}</p>
                 </div>
                 <div class="cnpj-banco">
                     <h6>Conta de Repasse</h6>
-                    <p>{{ adquirentes?.conta_transferencia }}</p>
+                    <p>{{ adquirente?.conta_transferencia }}</p>
                 </div>
                 <div class="cod-banco">
                     <h6>CNPJ</h6>
-                    <p>{{ adquirentes?.cnpj }}</p>
+                    <p>{{ adquirente?.cnpj }}</p>
                 </div>
             </div>
         </div>
@@ -82,11 +83,11 @@
             <div class="container-empresa">
                 <div class="agencia-banco">
                     <p>Agência</p>
-                    <p>{{ adquirentes?.agencia }}</p>
+                    <p>{{ adquirente?.agencia }}</p>
                 </div>
                 <div class="cc-banco">
                     <p>Conta Corrente</p>
-                    <p>{{ adquirentes?.conta_corrente }}</p>
+                    <p>{{ adquirente?.conta_corrente }}</p>
                 </div>
             </div>
         </div>
@@ -97,7 +98,7 @@
             </div>
             <div class="container-obs">
                 <div class="obs-banco">
-                    <p>{{ adquirentes?.observacoes }}</p>
+                    <p>{{ adquirente?.observacoes }}</p>
                 </div>
             </div>
         </div>
@@ -106,34 +107,33 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { getBancosById, type Banco } from '~/services/bancoService';
-import statusToggle from '~/components/banco-adquirente/statusToggle.vue';
-import { useRouter } from 'vue-router';
-import { getAdquirentesById, type Adquirentes } from '~/services/adquirentesService';
+import { useRoute, useRouter } from 'vue-router';
+import StatusToggle from '~/components/banco-adquirente/statusToggle.vue';
+import { getAdquirentesById, type Adquirentes } from '~/services/adquirentesService'; // atenção: singular
 
 const route = useRoute();
-const adquirentes = ref<Adquirentes | null>(null);
 const router = useRouter();
 
-const fetchAdquirentes = async () => {
+const adquirente = ref<Adquirentes | null>(null);
+
+const fetchAdquirente = async () => {
     const id = Number(route.params.id);
     try {
-        adquirentes.value = await getAdquirentesById(id);
+        adquirente.value = await getAdquirentesById(id);
     } catch (error) {
-        console.error('Erro ao buscar Adquirente:', error);
+        console.error('Erro ao buscar banco:', error);
     }
 };
 
 onMounted(() => {
-    fetchAdquirentes();
+    fetchAdquirente();
 });
 
 const voltar = () => {
-    router.back()
+    router.back();
 }
-
 </script>
+
 
 <style scoped>
 .container-principal {

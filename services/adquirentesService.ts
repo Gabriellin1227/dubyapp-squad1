@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3001/duby';
+export const BASE_URL = 'http://192.168.25.186:3001/duby';
 
 export enum AdquirentesStatus {
     Ativo = 'ativo',
@@ -26,3 +26,10 @@ export const getAllAdquirentes = async (): Promise<Adquirentes[]> => {
 export const getAdquirentesById = async (id: number): Promise<Adquirentes> => {
     return await $fetch(`${BASE_URL}/adquirentes/id/${id}`);
 };
+
+export const updateAdquirenteStatus = async (id: number, status: AdquirentesStatus) => {
+    return await $fetch(`${BASE_URL}/adquirentes/${id}/status`, {
+        method: 'PUT',
+        body: { status }
+    })
+}

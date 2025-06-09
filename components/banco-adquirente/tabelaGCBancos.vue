@@ -85,8 +85,6 @@ const fetchBancos = async () => {
 onMounted(() => {
     fetchBancos();
 });
-
-defineProps<{ bancos: Banco[] }>()
 </script>
 
 <style scoped>

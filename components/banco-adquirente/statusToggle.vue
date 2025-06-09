@@ -6,15 +6,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { BancoStatus, updateBancoStatus } from '~/services/bancoService'
+import { AdquirentesStatus } from '~/services/adquirentesService' 
 
 const props = defineProps<{
     id: number
-    statusInicial: BancoStatus
+    statusInicial?: BancoStatus
+    tipo: 'banco' | 'adquirente' // nova prop para saber qual função chamar
 }>()
 
-const status = ref<BancoStatus>(props.statusInicial)
+const status = ref<BancoStatus>(props.statusInicial ?? BancoStatus.Inativo)
 
 const toggleStatus = async () => {
     const novoStatus = status.value === BancoStatus.Ativo
@@ -22,13 +24,19 @@ const toggleStatus = async () => {
         : BancoStatus.Ativo
 
     try {
-        await updateBancoStatus(props.id, novoStatus)
+        if (props.tipo === 'banco') {
+            await updateBancoStatus(props.id, novoStatus)
+        } else {
+            await updateAdquirenteStatus(props.id, novoStatus)
+        }
+
         status.value = novoStatus
     } catch (err) {
         console.error('Erro ao atualizar status:', err)
     }
 }
 </script>
+
 
 <style scoped>
 .switch {

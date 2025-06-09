@@ -127,7 +127,7 @@ function mudarToggle(valor) {
     color: white;
 }
 
-.toggle-button:not(.active):hover {
+.toggle-button:not(.ativo):hover {
     background-color: #f2f2f2;
 }
 </style>
