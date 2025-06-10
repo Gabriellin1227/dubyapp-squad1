@@ -1,6 +1,7 @@
+import { BASE_URL } from "./shared/baseUrl";
 import type { Status } from "./shared/statusEnum";
 
-export const BASE_URL = 'http://localhost:3001/duby';
+const API_URL = BASE_URL
 
 export type BancoStatus = Status
 
@@ -20,11 +21,11 @@ export interface Banco {
 }
 
 export const getAllBancos = async (): Promise<Banco[]> => {
-    return await $fetch(`${BASE_URL}/bancos`);
+    return await $fetch(`${API_URL}/bancos`);
 };
 
 export const getBancosById = async (id: number): Promise<Banco> => {
-    return await $fetch(`${BASE_URL}/bancos/id/${id}`);
+    return await $fetch(`${API_URL}/bancos/id/${id}`);
 };
 
 export async function buscarBancoPorNome(nome: string): Promise<Banco[]> {
@@ -34,7 +35,7 @@ export async function buscarBancoPorNome(nome: string): Promise<Banco[]> {
 }
 
 export const updateBancoStatus = async (id: number, status: BancoStatus) => {
-    return await $fetch(`${BASE_URL}/bancos/${id}/status`, {
+    return await $fetch(`${API_URL}/bancos/${id}/status`, {
         method: 'PUT',
         body: { status }
     })

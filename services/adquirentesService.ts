@@ -1,6 +1,7 @@
+import { BASE_URL } from "./shared/baseUrl";
 import type { Status } from "./shared/statusEnum";
 
-export const BASE_URL = 'http://localhost:3001/duby';
+const API_URL = BASE_URL
 
 export type AdquirentesStatus = Status
 
@@ -19,15 +20,15 @@ export interface Adquirentes {
 }
 
 export const getAllAdquirentes = async (): Promise<Adquirentes[]> => {
-    return await $fetch(`${BASE_URL}/adquirentes`);
+    return await $fetch(`${API_URL}/adquirentes`);
 };
 
 export const getAdquirentesById = async (id: number): Promise<Adquirentes> => {
-    return await $fetch(`${BASE_URL}/adquirentes/id/${id}`);
+    return await $fetch(`${API_URL}/adquirentes/id/${id}`);
 };
 
 export const updateAdquirenteStatus = async (id: number, status: AdquirentesStatus) => {
-    return await $fetch(`${BASE_URL}/adquirentes/${id}/status`, {
+    return await $fetch(`${API_URL}/adquirentes/${id}/status`, {
         method: 'PUT',
         body: { status }
     })

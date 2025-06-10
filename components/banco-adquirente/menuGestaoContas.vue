@@ -13,7 +13,6 @@
 
         <div class="flex-spacer"></div>
 
-
         <div class="acoes">
             <button id="btn-filtrar" class="btn filtrar" @click="$emit('filtrar')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -23,20 +22,13 @@
             </button>
             <button id="btn-excluir" class="btn excluir" @click="$emit('excluir')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 
-2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1.5A1.5 1.5 0 0 
-1 6.5 0h3A1.5 1.5 0 0 1 11 1.5V2h2.5a1 1 0 0 1 
-1 1zM6 2v-.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 
-.5.5V2H6zm6 1H4v9a1 1 0 0 0 1 1h6a1 1 0 0 0 
-1-1V3z" />
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1 0-2H5V1.5A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5V2h2.5a1 1 0 0 1 1 1zM6 2v-.5a.5 5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V2H6zm6 1H4v9a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3z" />
                 </svg>
                 Excluir
             </button>
-            <button id="btn-add" class="btn adicionar" @click="$emit('adicionar')">
+            <button id="btn-add" class="btn adicionar" @click='abrirModal'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 
-    0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 
-    0 0 1 8 4z" />
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                 </svg>
                 Adicionar
             </button>
@@ -53,11 +45,15 @@ import { defineEmits } from 'vue'
 
 const mostrar = ref('bancos') // estado interno só para UI se quiser
 
-const emit = defineEmits(['toggleTabela'])
+const emit = defineEmits(['toggleTabela','abrirModal'])
 
 function mudarToggle(valor) {
     mostrar.value = valor
     emit('toggleTabela', valor)
+}
+
+function abrirModal() {
+    emit('abrirModal')
 }
 </script>
 
@@ -69,6 +65,9 @@ function mudarToggle(valor) {
     margin: 0;
 }
 
+.acoes button {
+    align-items: center;
+}
 
 .acoes {
     display: flex;
@@ -76,6 +75,8 @@ function mudarToggle(valor) {
 }
 
 #btn-filtrar {
+    display: flex;
+    justify-content: center;
     background-color: var(--principal);
     font-size: var(--font-md);
     color: #ffff;
@@ -85,6 +86,8 @@ function mudarToggle(valor) {
 }
 
 #btn-excluir {
+    display: flex;
+    justify-content: center;
     background-color: #D43343;
     font-size: var(--font-md);
     color: #ffff;
@@ -94,6 +97,8 @@ function mudarToggle(valor) {
 }
 
 #btn-add {
+    display: flex;
+    justify-content: center;
     background-color: var(--comp-4);
     font-size: var(--font-md);
     color: #ffff;
