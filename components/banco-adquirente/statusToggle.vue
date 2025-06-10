@@ -6,23 +6,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { BancoStatus, updateBancoStatus } from '~/services/bancoService'
-import { AdquirentesStatus } from '~/services/adquirentesService' 
+import { ref, watch } from 'vue'
+import { type BancoStatus, updateBancoStatus } from '~/services/bancoService'
+import { type AdquirentesStatus, updateAdquirenteStatus } from '~/services/adquirentesService'
+import { Status } from '~/services/shared/statusEnum';
 
 const props = defineProps<{
     id: number
-    statusInicial?: BancoStatus
-    tipo: 'banco' | 'adquirente' // nova prop para saber qual função chamar
+    statusInicial?: BancoStatus | AdquirentesStatus
+    tipo: 'banco' | 'adquirente'
 }>()
 
-const status = ref<BancoStatus>(props.statusInicial ?? BancoStatus.Inativo)
+const status = ref<Status>(props.statusInicial ?? Status.Ativo)
+
+// Atualiza o status interno se o statusInicial mudar externamente
+watch(() => props.statusInicial, (novoStatus) => {
+    if (novoStatus !== undefined) {
+        status.value = novoStatus
+    }
+})
 
 const toggleStatus = async () => {
-    const novoStatus = status.value === BancoStatus.Ativo
-        ? BancoStatus.Inativo
-        : BancoStatus.Ativo
-
+    const novoStatus = status.value === Status.Ativo
+        ? Status.Inativo
+        : Status.Ativo
     try {
         if (props.tipo === 'banco') {
             await updateBancoStatus(props.id, novoStatus)

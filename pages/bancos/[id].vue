@@ -5,7 +5,7 @@
                 <h1>{{ banco?.razao_social }}</h1>
             </div>
             <div class="menu-interativo">
-                <statusToggle  :id="banco?.id" :status-inicial="banco?.status" tipo="banco" />
+                <statusToggle  v-if="banco" :id="banco?.id" :status-inicial="banco?.status" tipo="banco" />
                 <button class="icon-button">
                     <svg width="24" height="24" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_1162_128)">

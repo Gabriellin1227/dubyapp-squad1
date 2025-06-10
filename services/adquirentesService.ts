@@ -1,9 +1,8 @@
-export const BASE_URL = 'http://192.168.25.186:3001/duby';
+import type { Status } from "./shared/statusEnum";
 
-export enum AdquirentesStatus {
-    Ativo = 'ativo',
-    Inativo = 'inativo',
-}
+export const BASE_URL = 'http://localhost:3001/duby';
+
+export type AdquirentesStatus = Status
 
 export interface Adquirentes {
     id: number;

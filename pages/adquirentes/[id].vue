@@ -5,8 +5,8 @@
                 <h1>{{ adquirente?.razao_social }}</h1>
             </div>
             <div class="menu-interativo">
-                <statusToggle v-if="adquirente" :id="adquirente.id" :status-inicial="adquirente.status"
-                    tipo="adquirente" />
+                <statusToggle v-if="adquirente?.id && adquirente?.status" :id="adquirente.id"
+                    :status-inicial="adquirente.status" tipo="adquirente" />
                 <button class="icon-button">
                     <svg width="24" height="24" viewBox="0 0 27 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g filter="url(#filter0_d_1162_128)">
@@ -83,11 +83,11 @@
             <div class="container-empresa">
                 <div class="agencia-banco">
                     <p>Agência</p>
-                    <p>{{ adquirente?.agencia }}</p>
+                    <p>{{ adquirente?.cnpj }}</p>
                 </div>
                 <div class="cc-banco">
                     <p>Conta Corrente</p>
-                    <p>{{ adquirente?.conta_corrente }}</p>
+                    <p>{{ adquirente?.conta_transferencia }}</p>
                 </div>
             </div>
         </div>
@@ -113,18 +113,24 @@ import { getAdquirentesById, type Adquirentes } from '~/services/adquirentesServ
 
 const route = useRoute();
 const router = useRouter();
-
 const adquirente = ref<Adquirentes | null>(null);
 
 const fetchAdquirente = async () => {
     const id = Number(route.params.id);
+    if (isNaN(id)) {
+        console.error("ID inválido na rota:", route.params.id);
+        return;
+    }
     try {
-        adquirente.value = await getAdquirentesById(id);
+        const resultado = await getAdquirentesById(id);
+        adquirente.value = Array.isArray(resultado) ? resultado[0] : resultado;
+        console.log("Adquirente carregado:", adquirente.value);
     } catch (error) {
-        console.error('Erro ao buscar banco:', error);
+        console.error("Erro ao buscar adquirente:", error);
     }
 };
 
+console.log(fetchAdquirente)
 onMounted(() => {
     fetchAdquirente();
 });

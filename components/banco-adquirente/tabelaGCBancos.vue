@@ -30,7 +30,7 @@
                     <td>
                         <NuxtLink :to="`/bancos/${banco.id}`" class="nome">
                             <img :src="banco.logo_url" alt="Logo" />
-                            {{ banco.razao_social }}
+                            {{ banco.nome }}
                         </NuxtLink>
                     </td>
                     <td>
