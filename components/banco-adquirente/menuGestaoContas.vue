@@ -59,80 +59,72 @@ function abrirModal() {
 
 <style lang="scss" scoped>
 .container-1 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+/* Ações */
+.acoes {
+  display: flex;
+  gap: 1rem;
 }
 
 .acoes button {
-    align-items: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: var(--font-md);
+  color: #fff;
+  padding: 1rem;
+  width: 136px;
+  height: 56px;
+  border: none;
+  cursor: pointer;
 }
 
-.acoes {
-    display: flex;
-    gap: 1rem;
-}
-
+/* Botões com cores distintas */
 #btn-filtrar {
-    display: flex;
-    justify-content: center;
-    background-color: var(--principal);
-    font-size: var(--font-md);
-    color: #ffff;
-    padding: 1rem;
-    width: 136px;
-    height: 56px;
+  background-color: var(--principal);
 }
 
 #btn-excluir {
-    display: flex;
-    justify-content: center;
-    background-color: #D43343;
-    font-size: var(--font-md);
-    color: #ffff;
-    padding: 1rem;
-    width: 136px;
-    height: 56px;
+  background-color: #D43343;
 }
 
 #btn-add {
-    display: flex;
-    justify-content: center;
-    background-color: var(--comp-4);
-    font-size: var(--font-md);
-    color: #ffff;
-    padding: 1rem;
-    width: 136px;
-    height: 56px;
+  background-color: var(--comp-4);
 }
 
+/* Tabs container */
 .tabs {
-    display: flex;
-    width: 400px;
-    height: 56px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    overflow: hidden;
+  display: flex;
+  width: 400px;
+  height: 56px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+/* Botões de toggle/tab */
 .toggle-button {
-    flex: 1;
-    padding: 12px 24px;
-    border: none;
-    background-color: white;
-    color: #3f297e;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+  flex: 1;
+  padding: 12px 24px;
+  border: none;
+  background-color: white;
+  color: #3f297e;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .toggle-button.ativo {
-    background-color: var(--principal);
-    color: white;
+  background-color: var(--principal);
+  color: white;
 }
 
 .toggle-button:not(.ativo):hover {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 </style>

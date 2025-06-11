@@ -148,61 +148,66 @@ const voltar = () => {
 </script>
 
 <style scoped>
-#nomeBanco {
+/* ------------------ Variáveis e Base ------------------ */
+:root {
+  --roxo-principal: #412884;
+  --roxo-hover: #1d123b;
+  --azul-focus: #007bff;
+  --cinza-borda: #ccc;
+  --sombra-modal: rgba(0, 0, 0, 0.25);
+  --fonte-clara: #f6f6f6;
+  --texto-principal: #12283F;
+  --texto-titulo: #333;
+}
+
+/* ------------------ Inputs (Agrupados por tipo) ------------------ */
+.input-group,
+.input-group2,
+.input-group3 {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+
+.input-group label,
+.input-group2 label,
+.input-group3 label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.modal-input,
+#nomeBanco,
+#razaoSocial,
+#cnpj,
+#codBanco,
+#agencia,
+#conta {
   border-radius: 5px;
   height: 40px;
   font-size: 10px;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--cinza-borda);
+  box-sizing: border-box;
+  width: 100%;
 }
 
-#razaoSocial {
-  border-radius: 5px;
-  height: 40px;
-  font-size: 10px;
-}
-
-#cnpj {
-  display: flex;
-  flex-direction: column;
-  width: 256px;
-  height: 40px;
-  font-size: 10px;
-}
-
-#codBanco {
-  display: flex;
-  flex-direction: column;
-  width: 256px;
-  height: 40px;
-  font-size: 10px;
-}
-
-#agencia {
-  display: flex;
-  flex-direction: column;
-  width: 256px;
-  height: 40px;
-  font-size: 10px;
-}
-
+#cnpj,
+#codBanco,
+#agencia,
 #conta {
   display: flex;
   flex-direction: column;
   width: 256px;
-  height: 40px;
-  font-size: 10px;
 }
 
-.input-group2 {
-  display: flex;
-  gap: 2rem;
+.modal-input:focus {
+  outline: none;
+  border-color: var(--azul-focus);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
-.input-group3 {
-  display: flex;
-  gap: 2rem;
-}
-
-/* Estilos para o fundo cinza (backdrop) que cobre apenas a área do conteúdo principal */
+/* ------------------ Modal ------------------ */
 .modal-backdrop {
   position: absolute;
   width: 100%;
@@ -214,13 +219,10 @@ const voltar = () => {
   transition: opacity 0.3s ease;
 }
 
-/* Estilos para o container principal do modal (a caixa branca com o formulário) */
 .container-principal {
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  width: 90%;
-  /* Responsivo: 90% da largura do pai */
+  box-shadow: 0 10px 25px var(--sombra-modal);
   width: 624px;
   height: 504px;
   display: flex;
@@ -228,13 +230,11 @@ const voltar = () => {
   animation: slideIn 0.3s ease-out forwards;
 }
 
-/* Animação para o modal */
 @keyframes slideIn {
   from {
     transform: translateY(-20px);
     opacity: 0;
   }
-
   to {
     transform: translateY(0);
     opacity: 1;
@@ -247,9 +247,10 @@ const voltar = () => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  color: #12283F;
+  color: var(--texto-principal);
 }
 
+/* ------------------ Títulos ------------------ */
 .titulo {
   display: flex;
   justify-content: space-between;
@@ -258,15 +259,16 @@ const voltar = () => {
 
 .titulo h1 {
   font-size: 1.8rem;
-  color: #333;
+  color: var(--texto-titulo);
 }
 
+/* ------------------ Botões ------------------ */
 .icon-button {
   display: flex;
-  background-color: #412884;
-  color: #fff;
   justify-content: center;
   align-items: center;
+  background-color: var(--roxo-principal);
+  color: white;
   width: 40px;
   height: 40px;
   border-radius: 10px;
@@ -276,84 +278,43 @@ const voltar = () => {
   background-color: #0056b3;
 }
 
+.save-button,
+.save-button2 {
+  width: 104px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  align-self: center;
+}
+
+.save-button {
+  background-color: var(--roxo-principal);
+  color: white;
+  border: none;
+}
+
+.save-button:hover {
+  background-color: var(--roxo-hover);
+}
+
+.save-button2 {
+  background-color: white;
+  color: var(--roxo-principal);
+  border: 1px solid var(--roxo-principal);
+}
+
+.save-button2:hover {
+  background-color: rgb(156, 156, 156);
+}
+
+/* ------------------ Containers ------------------ */
 .container-itens {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* Espaçamento entre os grupos de input */
   flex-grow: 1;
-  /* Faz com que o container-itens preencha o espaço vertical restante */
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.input-group label {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.input-group2 label {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.input-group3 label {
-  font-weight: 500;
-  font-size: 0.95rem;
-}
-
-.modal-input {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  /* Cantos arredondados para inputs */
-  font-size: 1rem;
-  box-sizing: border-box;
-  /* Inclui padding e borda na largura total */
-}
-
-.modal-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
-
-.save-button {
-  background-color: #412884;
-  color: white;
-  width: 104px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-  align-self: center;
-}
-.save-button2 {
-  background-color: white;
-  color: #412884;
-  width: 104px;
-  height: 40px;
-  border: #412884 solid 1px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: background-color 0.2s ease;
-  align-self: center;
-}
-
-.save-button:hover {
-  background-color: #1d123b;
-}
-.save-button2:hover {
-  background-color: rgb(156, 156, 156);
 }
 </style>

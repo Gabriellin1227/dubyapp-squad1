@@ -89,149 +89,126 @@ onMounted(() => {
 
 <style scoped>
 .table-container {
-    background-color: #3f297e;
-    border-radius: 12px;
-    overflow-x: auto;
-    width: 1136px;
-    height: 692px;
+  width: 1136px;
+  height: 692px;
+  background-color: #3f297e;
+  border-radius: 12px;
+  overflow-x: auto;
 }
 
+/* Tabela */
 table {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border-collapse: collapse;
-    gap: 48px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-collapse: collapse;
+  gap: 48px;
 }
 
-tbody {
-    display: flex;
-    flex-direction: column;
-    padding: 0 0 0 64px;
-    gap: 32px;
-    color: #F6F6F6;
+thead tr,
+tbody tr {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
 }
 
 thead tr {
-    display: flex;
-    flex-direction: row;
-    gap: 48px;
-    color: #F6F6F6B2;
-    font-weight: 600;
-    font-size: var(--font-md);
-    padding: 38px 0 0 64px;
+  padding: 38px 0 0 64px;
+  color: #f6f6f6b2;
+  font-weight: 600;
+  font-size: var(--font-md);
 }
 
-.thinput {
-    display: flex;
-    align-items: center;
-    width: 104px;
+tbody {
+  display: flex;
+  flex-direction: column;
+  padding-left: 64px;
+  gap: 32px;
+  color: #f6f6f6;
 }
 
-.thnome {
-    display: flex;
-    align-items: center;
-    width: 176px;
-}
-
-.thagencia {
-    display: flex;
-    align-items: center;
-    width: 80px;
-}
-
-.thconta {
-    display: flex;
-    align-items: center;
-    width: 160px;
-}
-
+/* Células de cabeçalho com largura fixa */
+.thinput,
+.thnome,
+.thagencia,
+.thconta,
 .thstatus {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-tbody tr {
-    display: flex;
-    flex-direction: row;
-    gap: 48px;
-}
+.thinput { width: 104px; }
+.thnome { width: 176px; }
+.thagencia,
+.agencia { width: 80px; }
+.thconta,
+.conta-corrente { width: 160px; }
+.thstatus,
+.status { width: 56px; }
 
-.checkbox-td {
-    display: flex;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-}
-
-.nome {
-    display: flex;
-    align-items: center;
-    gap: 48px;
-    min-width: 256px;
-    color: inherit;       
-    text-decoration: none; 
-}
-
-.nome:hover {
-    opacity: 0.8;
-}
-
-.nome img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-}
-
-.agencia {
-    display: flex;
-    align-items: center;
-    width: 80px;
-    height: 32px;
-}
-
-.conta-corrente {
-    display: flex;
-    align-items: center;
-    width: 160px;
-    height: 32px;
-}
-
+.agencia,
+.conta-corrente,
 .status {
-    display: flex;
-    align-items: center;
-    width: 56px;
-    height: 32px;
+  display: flex;
+  align-items: center;
+  height: 32px;
 }
 
-.botao-olho {
-    display: flex;
-    align-items: center;
-    gap: 48px;
-    width: 192px;
-    height: 32px;
-    justify-content: center;
+/* Checkbox */
+.checkbox-td {
+  display: flex;
+  align-items: center;
+  width: 32px;
+  height: 32px;
 }
 
 input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 24px;
-    height: 24px;
-    border: 2px solid white;
-    border-radius: 6px;
-    background-color: #3f2285;
-    cursor: pointer;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  border-radius: 6px;
+  background-color: #3f2285;
+  cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
-    background-color: white;
+  background-color: white;
+}
+
+/* Nome + imagem */
+.nome {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  min-width: 256px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nome:hover {
+  opacity: 0.8;
+}
+
+.nome img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+/* Botão de visualização (ícone olho) */
+.botao-olho {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  width: 192px;
+  height: 32px;
 }
 
 .btn-view {
-    background: none;
-    border: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 </style>
