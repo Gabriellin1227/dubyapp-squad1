@@ -119,6 +119,7 @@ const toggleEditionMode = () => {
                 font-weight: 600;
 
                 cursor: pointer;
+                user-select: none;
 
                 .area-highlight {
                     display: none;
