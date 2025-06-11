@@ -3,6 +3,7 @@ import menuGestaoContas1 from '~/components/banco-adquirente/menuGestaoContas.vu
 import tabelaGCBancos from '~/components/banco-adquirente/tabelaGCBancos.vue';
 import tabelaGCAdquirentes from '~/components/banco-adquirente/tabelaGCAdquirentes.vue'
 import CadBanco from '~/components/banco-adquirente/cadBanco.vue';
+import { getAllBancos } from '@/services/bancoService';
 
 
 const tabelaAtiva = ref('bancos') // controla qual tabela mostrar
@@ -29,7 +30,7 @@ function fecharModal() {
                 <tabelaGCBancos v-if="tabelaAtiva === 'bancos'" />
                 <tabelaGCAdquirentes v-else />
 
-                <CadBanco v-if="mostrarModal" @fechar="fecharModal" />
+                <CadBanco v-if="mostrarModal" @fechar="mostrarModal = false" @atualizarLista="buscarBancos" />
         </div>
 </template>
 

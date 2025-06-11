@@ -34,6 +34,13 @@ export async function buscarBancoPorNome(nome: string): Promise<Banco[]> {
     return await response.json()
 }
 
+export const createBanco = async (data: any): Promise<Banco> => {
+    return await $fetch(`${API_URL}/bancos`, {
+        method: 'POST',
+        body: data,
+    });
+};
+
 export const updateBancoStatus = async (id: number, status: BancoStatus) => {
     return await $fetch(`${API_URL}/bancos/${id}/status`, {
         method: 'PUT',
