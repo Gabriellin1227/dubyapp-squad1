@@ -33,8 +33,6 @@
                             </filter>
                         </defs>
                     </svg>
-
-
                 </button>
 
                 <button class="icon-button" @click="voltar">
@@ -49,7 +47,6 @@
                             </clipPath>
                         </defs>
                     </svg>
-
                 </button>
             </div>
         </div>
