@@ -175,8 +175,8 @@ function handleClickOutside(event) {
                     <div class="module-title">Gestão de Usuários</div>
                 </div>
             </NuxtLink>
-            <NuxtLink to="/logsUsuarios">
-                <div id="logs-usuarios-link" class="menu-item" :class="{ active: route.path.startsWith('/logsUsuarios')}">
+            <NuxtLink to="/logs">
+                <div id="logs-usuarios-link" class="menu-item" :class="{ active: route.path.startsWith('/logs')}">
                     <div class="menu-highlight"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 	                    <path fill="none" stroke="#412884" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 12h.01M4 6h.01M4 18h.01M8 18h2m-2-6h2M8 6h2m4 0h6m-6 6h6m-6 6h6" />
