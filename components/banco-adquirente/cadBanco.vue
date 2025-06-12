@@ -148,25 +148,16 @@ const voltar = () => {
 </script>
 
 <style scoped>
-/* ------------------ Variáveis e Base ------------------ */
-:root {
-  --roxo-principal: #412884;
-  --roxo-hover: #1d123b;
-  --azul-focus: #007bff;
-  --cinza-borda: #ccc;
-  --sombra-modal: rgba(0, 0, 0, 0.25);
-  --fonte-clara: #f6f6f6;
-  --texto-principal: #12283F;
-  --texto-titulo: #333;
+/* ------------------ Inputs (Agrupados por tipo) ------------------ */
+.input-group {
+  display: flex;
+  flex-direction: column;
 }
 
-/* ------------------ Inputs (Agrupados por tipo) ------------------ */
-.input-group,
 .input-group2,
 .input-group3 {
   display: flex;
   gap: 2rem;
-  flex-direction: column;
 }
 
 .input-group label,
@@ -187,7 +178,7 @@ const voltar = () => {
   height: 40px;
   font-size: 10px;
   padding: 0.8rem 1rem;
-  border: 1px solid var(--cinza-borda);
+  border: 1px solid #ccc;
   box-sizing: border-box;
   width: 100%;
 }
@@ -203,7 +194,7 @@ const voltar = () => {
 
 .modal-input:focus {
   outline: none;
-  border-color: var(--azul-focus);
+  border-color: #22027a;
   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
@@ -222,7 +213,7 @@ const voltar = () => {
 .container-principal {
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0 10px 25px var(--sombra-modal);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   width: 624px;
   height: 504px;
   display: flex;
@@ -247,7 +238,7 @@ const voltar = () => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  color: var(--texto-principal);
+  color:#12283F;
 }
 
 /* ------------------ Títulos ------------------ */
@@ -259,7 +250,7 @@ const voltar = () => {
 
 .titulo h1 {
   font-size: 1.8rem;
-  color: var(--texto-titulo);
+  color: #333;
 }
 
 /* ------------------ Botões ------------------ */
@@ -267,7 +258,7 @@ const voltar = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--roxo-principal);
+  background-color: #412884;
   color: white;
   width: 40px;
   height: 40px;
@@ -275,7 +266,7 @@ const voltar = () => {
 }
 
 .icon-button:hover {
-  background-color: #0056b3;
+  background-color: #22027a;
 }
 
 .save-button,
@@ -291,19 +282,19 @@ const voltar = () => {
 }
 
 .save-button {
-  background-color: var(--roxo-principal);
+  background-color: #412884;
   color: white;
   border: none;
 }
 
 .save-button:hover {
-  background-color: var(--roxo-hover);
+  background-color: #22027a;
 }
 
 .save-button2 {
   background-color: white;
-  color: var(--roxo-principal);
-  border: 1px solid var(--roxo-principal);
+  color: #412884;
+  border: 1px solid #412884;
 }
 
 .save-button2:hover {

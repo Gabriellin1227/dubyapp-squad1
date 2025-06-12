@@ -89,14 +89,16 @@ onMounted(() => {
 
 <style scoped>
 .table-container {
-  width: 1136px;
+  width: 100%;
+  max-width: 1136px;
   height: 692px;
   background-color: #3f297e;
   border-radius: 12px;
   overflow-x: auto;
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
 }
 
-/* Tabela */
 table {
   width: 100%;
   display: flex;
@@ -127,7 +129,6 @@ tbody {
   color: #f6f6f6;
 }
 
-/* Células de cabeçalho com largura fixa */
 .thinput,
 .thnome,
 .thagencia,
@@ -139,12 +140,9 @@ tbody {
 
 .thinput { width: 104px; }
 .thnome { width: 176px; }
-.thagencia,
-.agencia { width: 80px; }
-.thconta,
-.conta-corrente { width: 160px; }
-.thstatus,
-.status { width: 56px; }
+.thagencia, .agencia { width: 80px; }
+.thconta, .conta-corrente { width: 160px; }
+.thstatus, .status { width: 56px; }
 
 .agencia,
 .conta-corrente,
@@ -154,7 +152,6 @@ tbody {
   height: 32px;
 }
 
-/* Checkbox */
 .checkbox-td {
   display: flex;
   align-items: center;
@@ -176,7 +173,6 @@ input[type="checkbox"]:checked {
   background-color: white;
 }
 
-/* Nome + imagem */
 .nome {
   display: flex;
   align-items: center;
@@ -196,7 +192,6 @@ input[type="checkbox"]:checked {
   border-radius: 50%;
 }
 
-/* Botão de visualização (ícone olho) */
 .botao-olho {
   display: flex;
   align-items: center;
@@ -210,5 +205,25 @@ input[type="checkbox"]:checked {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+@media (min-width: 1600px) {
+  .table-container {
+    max-width: 1340px;
+    min-height: 690px;
+  }
+}
+
+@media (min-width: 1720px) {
+  .table-container {
+    max-width: 1620px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .table-container {
+    max-width: 1620px;
+    min-height: 862px;
+  }
 }
 </style>
