@@ -15,6 +15,16 @@ const setTable = (area) => {
         activeArea.value = 'cargos';
     }
 };
+
+const showModal = ref(false);
+
+const handlerModal = () => {
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+};
 </script>
 
 <template>
@@ -23,7 +33,7 @@ const setTable = (area) => {
             <div class="toggle-area">
                 <a href="" @click.prevent>
                     <div
-                        id="crud-bank-area"
+                        id="crud-analyst-area"
                         :class="{ 'active-area': activeArea === 'usuarios' }"
                         @click="setTable('usuarios')"
                     >
@@ -32,7 +42,7 @@ const setTable = (area) => {
                 </a>
                 <a href="" @click.prevent>
                     <div
-                        id="crud-acquirer-area"
+                        id="crud-position-area"
                         :class="{ 'active-area': activeArea === 'cargos' }"
                         @click="setTable('cargos')"
                     >
@@ -53,7 +63,7 @@ const setTable = (area) => {
                     </svg>
                     Excluir
                 </button>
-                <button class="add-button">
+                <button class="add-button" @click="handlerModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="#F6F6F6" d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z" />
                     </svg>
@@ -65,6 +75,8 @@ const setTable = (area) => {
             <component :is="currentTable" />
         </div>
     </div>
+    <cadAnalista v-if="showModal && activeArea === 'usuarios'" @closeModal="closeModal" />
+    <cadCargo v-if="showModal && activeArea === 'cargos'" @closeModal="closeModal" />
 </template>
 
 <style scoped>
@@ -125,7 +137,7 @@ const setTable = (area) => {
             font-weight: 500;
         }
 
-        #crud-bank-area {
+        #crud-analyst-area {
             height: 100%;
 
             color: var(--principal);
@@ -133,7 +145,7 @@ const setTable = (area) => {
             border-radius: 10px 0 0 10px;
         }
         
-        #crud-acquirer-area {
+        #crud-position-area {
             height: 100%;
 
             color: var(--principal);
