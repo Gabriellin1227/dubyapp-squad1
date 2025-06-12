@@ -195,7 +195,6 @@ const voltar = () => {
 .modal-input:focus {
   outline: none;
   border-color: #22027a;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 /* ------------------ Modal ------------------ */
@@ -213,7 +212,6 @@ const voltar = () => {
 .container-principal {
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
   width: 624px;
   height: 504px;
   display: flex;
