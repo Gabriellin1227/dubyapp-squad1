@@ -4,16 +4,6 @@ import { ref } from 'vue';
 const emit = defineEmits(['closeModal']);
 
 const formRef = ref(null);
-
-const nextStep = () => {
-    if (formRef.value && formRef.value.reportValidity()) {
-        step.value++;
-    }
-};
-
-const backStep = () => {
-    step.value--;
-};
 </script>
 
 <template>

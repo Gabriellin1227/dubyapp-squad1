@@ -2,6 +2,8 @@
 defineProps({
     isOpen: Boolean
 });
+
+const emit = defineEmits(['exit']);
 </script>
 
 <template>
@@ -16,35 +18,15 @@ defineProps({
             </div>
             <div class="menu-features">
                 <div class="menu-features-settings">
-                    <a href="#profile">
-                        <div class="menu-feature">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16">
-                                <rect width="16" height="16" fill="none" />
-                                <path fill="none" stroke="#12283fe6" d="M3.5 14v-.5a4 4 0 0 1 4-4h1a4 4 0 0 1 4 4v.5m-2-9a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z" stroke-width="1.4" />
-                            </svg>
-                            <div class="menu-feature-title">Perfil</div>
-                        </div>
-                    </a>
-                    <a href="#settings">
+                    <NuxtLink to="/configuracoes">
                         <div class="menu-feature">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="#12283fe6" d="m12 .845l9.66 5.578v11.154L12 23.155l-9.66-5.578V6.423zm0 2.31L4.34 7.577v8.846L12 20.845l7.66-4.422V7.577zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6m-5 3a5 5 0 1 1 10 0a5 5 0 0 1-10 0" />
                             </svg>
                             <div class="menu-feature-title">Configurações da conta</div>
                         </div>
-                    </a>
-                    <a href="#changeTheme">
-                        <div class="menu-feature">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20">
-                                <rect width="20" height="20" fill="none" />
-                                <path fill="#12283fe6" d="M10 3.5a6.5 6.5 0 1 1 0 13zM10 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16" stroke-width="0.3" stroke="#12283F" />
-                            </svg>
-                            <div class="menu-feature-title">Tema</div>
-                        </div>
-                    </a>
-                </div>
-                <div class="menu-features-system">
-                    <a href="#exitSystem">
+                    </NuxtLink>
+                    <a href="" @click.prevent="emit('exit')">
                         <div class="menu-feature">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
                                 <path fill="none" stroke="#12283fe6" stroke-linecap="round" stroke-linejoin="round" stroke-width="38" d="M320 176v-40a40 40 0 0 0-40-40H88a40 40 0 0 0-40 40v240a40 40 0 0 0 40 40h192a40 40 0 0 0 40-40v-40m64-160l80 80l-80 80m-193-80h273" />
@@ -65,7 +47,6 @@ defineProps({
     top: 80px;
     right: 5px;
 
-    height: 288px;
     width: 320px;
 
     padding: var(--spacing-sm) 0;
@@ -139,10 +120,6 @@ defineProps({
             display: flex;
             flex-direction: column;
             gap: var(--spacing-sm);
-
-            .menu-features-settings {
-                border-bottom: 1px solid rgba(18, 40, 63, 0.2);
-            }
 
             .menu-feature {
                 display: flex;
