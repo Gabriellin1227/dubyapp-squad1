@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAuth } from '@/stores/useAuth';
 import menuReduzido from '~/components/menuReduzido.vue';
 import notificacoes from '~/components/notificacoes.vue';
 
@@ -37,6 +38,14 @@ function handleClickOutside(event) {
     if (isNotificationOpen.value && !notification.contains(event.target) && !notificationToggle.contains(event.target)) {
         isNotificationOpen.value = false;
     };
+}
+
+const auth = useAuth();
+const router = useRouter();
+
+function handleLogout() {
+    auth.logout()
+    router.push('/login')
 }
 </script>
 
@@ -186,7 +195,7 @@ function handleClickOutside(event) {
             </NuxtLink>
          </div>
 
-         <a href="#exitSystem">
+         <a href="" @click.prevent="handleLogout">
              <div id="logout-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
                     <path fill="none" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M320 176v-40a40 40 0 0 0-40-40H88a40 40 0 0 0-40 40v240a40 40 0 0 0 40 40h192a40 40 0 0 0 40-40v-40m64-160l80 80l-80 80m-193-80h273" />
@@ -197,7 +206,7 @@ function handleClickOutside(event) {
     </aside>
     <main>
         <notificacoes :is-open="isNotificationOpen" />
-        <menuReduzido :is-open="isMenuOpen" />
+        <menuReduzido :is-open="isMenuOpen" @exit="handleLogout" />
         <NuxtPage />
     </main>
     <div class="small-screen-message">
