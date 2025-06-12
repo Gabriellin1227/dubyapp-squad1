@@ -64,7 +64,7 @@ function handleLogin() {
                         </label>
                         <div class="remember-message">Lembrar empresa</div>
                     </div>
-                    <a href="#"><span>Esqueci minha senha</span></a>
+                    <NuxtLink to="/recuperarSenha"><span>Esqueci minha senha</span></NuxtLink>
                 </div>
             </div>
         </div>

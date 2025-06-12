@@ -1,15 +1,14 @@
-import { useAuth } from '@/stores/useAuth'
-
 export default defineNuxtRouteMiddleware((to) => {
     const auth = useAuth()
 
-    const isLoginPage = to.path === '/login'
+    const publicPages = ['/login', '/recuperarSenha']
+    const isPublicPage = publicPages.includes(to.path)
 
-    if (!auth.isAuthenticated && !isLoginPage) {
+    if (!auth.isAuthenticated && !isPublicPage) {
         return navigateTo('/login')
     }
 
-    if (auth.isAuthenticated && isLoginPage) {
+    if (auth.isAuthenticated && to.path === '/login') {
         return navigateTo('/')
     }
-})
+});
