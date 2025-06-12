@@ -75,8 +75,12 @@ const closeModal = () => {
             <component :is="currentTable" />
         </div>
     </div>
-    <cadAnalista v-if="showModal && activeArea === 'usuarios'" @closeModal="closeModal" />
-    <cadCargo v-if="showModal && activeArea === 'cargos'" @closeModal="closeModal" />
+    <cadAnalista v-if="showModal && activeArea === 'usuarios'" @closeModal="closeModal">
+        <template #title>Cadastrar</template>
+    </cadAnalista>
+    <cadCargo v-if="showModal && activeArea === 'cargos'" @closeModal="closeModal">
+        <template #title>Cadastrar</template>
+    </cadCargo>
 </template>
 
 <style scoped>

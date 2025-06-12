@@ -24,7 +24,7 @@ const backStep = () => {
         <dialog open class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">Cadastrar Analista</div>
+                    <div class="modal-title"><slot name="title"></slot> Analista</div>
                     <button @click="emit('closeModal')">x</button>
                 </div>
                 <div class="modal-main">
@@ -45,8 +45,8 @@ const backStep = () => {
                                     <input type="text" name="cpf" id="ianalystCPF" required placeholder="000.000.000-00">
                                 </div>
                                 <div class="input-container">
-                                    <div class="input-title">Senha inicial</div>
-                                    <input type="text" name="password" id="ianalystPassword" required placeholder="Digite a senha de primeiro acesso">
+                                    <div class="input-title">Senha</div>
+                                    <input type="text" name="password" id="ianalystPassword" required placeholder="Digite a senha do usuário">
                                 </div>
                             </div>
                             <div class="input-wrap-container">

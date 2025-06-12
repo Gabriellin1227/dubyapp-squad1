@@ -21,7 +21,7 @@ const backStep = () => {
         <dialog open class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div class="modal-title">Cadastrar Cargo</div>
+                    <div class="modal-title"><slot name="title"></slot> Cargo</div>
                     <button @click="emit('closeModal')">x</button>
                 </div>
                 <div class="modal-main">
