@@ -26,7 +26,7 @@ const values = [2000, 4300, 9100, 2900, 7000, 5600, 8500, 1200, 4400, 3300, 6000
     gap: 16px;
 
     height: 302px;
-    width: 704px;
+    width: 100%;
 
     padding: 24px;
 

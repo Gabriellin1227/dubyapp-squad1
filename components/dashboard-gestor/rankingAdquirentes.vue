@@ -99,9 +99,10 @@ div.ranking-container {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex: 1;
 
     height: 426px;
-    width: 408px;
+    width: 100%;
 
     padding: 40px 24px;
 

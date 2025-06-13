@@ -90,6 +90,6 @@ const chartOptions = {
 <style scoped>
 .graph {
     height: 216px;
-    width: 656px;
+    width: 100%;
 }
 </style>

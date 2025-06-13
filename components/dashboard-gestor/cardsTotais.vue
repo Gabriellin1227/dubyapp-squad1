@@ -46,18 +46,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 24px;
 
     width: 100%;
-    max-width: 704px;
 
     .total-card {
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center;
-        gap: 16px;
 
         height: 88px;
-        width: 224px;
+        width: 100%;
 
         padding: 24px 32px;
 
