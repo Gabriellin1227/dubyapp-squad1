@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+import { useAuth } from '@/stores/useAuth';
+
+const auth = useAuth();
+</script>
 
 <template>
-    <div class="setting-group">
+    <div v-if="auth.userRole ==='gestor'" class="setting-group">
         <div class="group-title">Formatação</div>
         <div class="group-content">
             <div class="setting-card">
@@ -28,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="setting-group">
+    <div v-if="auth.userRole ==='gestor'" class="setting-group">
         <div class="group-title">Algoritmo de matching</div>
         <div class="group-content">
             <div class="setting-card">

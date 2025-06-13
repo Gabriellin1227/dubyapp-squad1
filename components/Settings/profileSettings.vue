@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useAuth } from '@/stores/useAuth';
+
+const auth = useAuth();
+</script>
 
 <template>
     <div class="setting-group profile-infos">
@@ -6,15 +10,18 @@
         <div class="group-content">
             <div class="setting-card">
                 <div class="card-title">Nome completo</div>
-                <div class="card-content">Jonathan Curvelo Campos Azevedo</div>
+                <div v-if="auth.userRole === 'gestor'" class="card-content">Jonathan Curvelo Campos Azevedo</div>
+                <div v-if="auth.userRole === 'admin'" class="card-content">Ronald Paiva Reis</div>
             </div>
             <div class="setting-card">
                 <div class="card-title">E-mail</div>
-                <div class="card-content">jonathancurvelo@gmail.com</div>
+                <div v-if="auth.userRole === 'gestor'" class="card-content">gestor@gmail.com</div>
+                <div v-if="auth.userRole === 'admin'" class="card-content">admin@duby.com</div>
             </div>
             <div class="setting-card">
                 <div class="card-title">Rede social</div>
-                <div class="card-content">@jonathancurvelo</div>
+                <div v-if="auth.userRole === 'gestor'" class="card-content">@jonathancurvelo</div>
+                <div v-if="auth.userRole === 'admin'" class="card-content">@ronaldpaiva</div>
             </div>
             <div class="setting-card">
                 <div class="card-title">CPF</div>
@@ -25,7 +32,8 @@
                 <div class="card-content">(79) 9 0000-0000</div>
             </div>
             <div class="setting-card">
-                <img src="/public/assets/images/photo-pexels.jpg" alt="Foto de perfil">
+                <img v-if="auth.userRole === 'gestor'" src="/public/assets/images/photo-pexels.jpg" alt="Foto de perfil">
+                <img v-if="auth.userRole === 'admin'" src="/public/assets/images/photo-pexels-2.png" alt="Foto de perfil">
                 <div class="card-content">
                     <div class="card-title">Foto de perfil</div>
                     <div>Max. 200x200, 5MB</div>

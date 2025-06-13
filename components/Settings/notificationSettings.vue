@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useAuth } from '@/stores/useAuth';
+
+const auth = useAuth();
+</script>
 
 <template>
     <div class="setting-group">
@@ -24,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="setting-group notification-preferences">
+    <div v-if="auth.userRole === 'gestor'" class="setting-group notification-preferences">
         <div class="group-title">Preferências de notificação</div>
         <div class="group-content">
             <div class="setting-card">

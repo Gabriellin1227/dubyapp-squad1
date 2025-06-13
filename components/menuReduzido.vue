@@ -1,19 +1,24 @@
 <script setup>
+import { useAuth } from '@/stores/useAuth';
 defineProps({
     isOpen: Boolean
 });
 
 const emit = defineEmits(['exit']);
+const auth = useAuth();
 </script>
 
 <template>
     <div v-show="isOpen" id="menu-dropdown" class="show" @click.stop>
         <div class="menu-content">
             <div class="menu-user-resume">
-                <img src="../assets/images/photo-pexels.jpg" alt="Foto de Perfil">
+                <img v-if="auth.userRole === 'gestor'" src="/public/assets/images/photo-pexels.jpg" alt="Foto de Perfil">
+                <img v-if="auth.userRole === 'admin'" src="/public/assets/images/photo-pexels-2.png" alt="Foto de Perfil">
                 <div class="menu-info-user">
-                    <div class="menu-name-user">Jonathan Curvelo</div>
-                    <div class="menu-email-user">jonathancurvelo@gmail.com</div>
+                    <div v-if="auth.userRole === 'gestor'" class="menu-name-user">Jonathan Curvelo</div>
+                    <div v-if="auth.userRole === 'gestor'" class="menu-email-user">gestor@gmail.com</div>
+                    <div v-if="auth.userRole === 'admin'" class="menu-name-user">Ronald Paiva</div>
+                    <div v-if="auth.userRole === 'admin'" class="menu-email-user">admin@duby.com</div>
                 </div>
             </div>
             <div class="menu-features">
