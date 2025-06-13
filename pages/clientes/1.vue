@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 const isActive = ref(true);
 const showModal = ref(false);
+const showHistModal = ref(true);
 const stepPage = ref(1);
 
 const handlerModal = () => {
@@ -11,6 +12,14 @@ const handlerModal = () => {
 
 const closeModal = () => {
     showModal.value = false;
+};
+
+const handlerHistModal = () => {
+    showHistModal.value = true;
+};
+
+const closeHistModal = () => {
+    showHistModal.value = false;
 };
 
 const nextStep = () => {
@@ -132,7 +141,7 @@ const goToStep = (n) => {
                         <div class="info-description">financeiro@nexora.com.br</div>
                     </div>
                 </div>
-                <button id="paymentsManager">Gestão de pagamentos</button>
+                <button @click="handlerHistModal" id="paymentsManager">Gestão de pagamentos</button>
             </div>
         </div>
         <div v-if="stepPage === 3" class="main-container">
@@ -220,6 +229,7 @@ const goToStep = (n) => {
     <cadCliente v-if="showModal" @closeModal="closeModal">
         <template #title>Editar</template>
     </cadCliente>
+    <historicoPagamentos v-if="showHistModal" @closeHistModal="closeHistModal" />
 </template>
 
 <style scoped>

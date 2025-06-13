@@ -155,7 +155,7 @@ const toggleRow = (id) => {
                 <td class="fade-text">{{ customer.name }}</td>
                 <td>{{ customer.status }}</td>
                 <td>{{ customer.email }}</td>
-                <td>{{ customer.active === 'true' ? 'Sim' : 'Não' }}</td>
+                <td>{{ customer.active ? 'Sim' : 'Não' }}</td>
                 <td>{{ customer.average }}</td>
                 <td>
                     <NuxtLink :to="`/clientes/${customer.id}`">
