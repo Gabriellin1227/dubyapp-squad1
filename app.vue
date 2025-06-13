@@ -14,7 +14,7 @@
     padding: 0;
 
     box-sizing: border-box;
-    font-family: 'Inter';
+    font-family: var(--fonte-padrao);
 }
 
 html, body {

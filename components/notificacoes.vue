@@ -1,4 +1,8 @@
 <script setup>
+import { useAuth } from '@/stores/useAuth';
+
+const auth = useAuth();
+
 defineProps({
     isOpen: Boolean
 });
@@ -26,7 +30,7 @@ defineProps({
             </div>
             <hr>
             <div class="notification-content" tabindex="-1">
-                <div class="notification-period-content">
+                <div v-if="auth.userRole === 'gestor'" class="notification-period-content">
                     <div class="notification-period-content-title">Hoje</div>
                     <div class="notification-box">
                         <div class="notification-info">
@@ -73,7 +77,50 @@ defineProps({
                         <div class="notification-view-status"></div>
                     </div>
                 </div>
-                <div class="notification-period-content">
+                <div v-if="auth.userRole === 'admin'" class="notification-period-content">
+                    <div class="notification-period-content-title">Hoje</div>
+                    <div class="notification-box">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Gabriel da Costa Lin cadastrou um novo cliente <span class="notification-time">há 4 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Abraão Andrade Reis exportou um relatório do dashboard <span class="notification-time">há 8 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Gabriel da Costa Lin cadastrou um novo cliente <span class="notification-time">há 10 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Abraão Andrade Reis exportou um relatório do dashboard <span class="notification-time">há 12 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Gabriel da Costa Lin cadastrou um novo cliente <span class="notification-time">há 13 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                </div>
+                <div v-if="auth.userRole === 'gestor'" class="notification-period-content">
                     <div class="notification-period-content-title">Ontem</div>
                     <div class="notification-box notification-read">
                         <div class="notification-info">
@@ -114,7 +161,26 @@ defineProps({
                         <div class="notification-view-status"></div>
                     </div>
                 </div>
-                <div class="notification-period-content">
+                <div v-if="auth.userRole === 'admin'" class="notification-period-content">
+                    <div class="notification-period-content-title">Ontem</div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Gabriel da Costa Lin exportou o relatório de vendas <span class="notification-time">há 18 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Levi Fabrício de Melo Pereira removeu um cliente <span class="notification-time">há 19 horas</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                </div>
+                <div v-if="auth.userRole === 'gestor'" class="notification-period-content">
                     <div class="notification-period-content-title">Mais antigas</div>
                     <div class="notification-box notification-read">
                         <div class="notification-info">
@@ -182,6 +248,49 @@ defineProps({
                                     </svg>
                                     Banese
                                 </div>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                </div>
+                <div v-if="auth.userRole === 'admin'" class="notification-period-content">
+                    <div class="notification-period-content-title">Mais antigas</div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Abraão Andrade Reis editou o cadastro de um cliente <span class="notification-time">há 2 dias</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Júlio César Conceição Gonzaga cadastrou um novo cliente <span class="notification-time">há 3 dias</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Gabriel da Costa Lin deu baixa em um pagamento <span class="notification-time">há 4 dias</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Levi Fabrício de Melo Pereira desfez um pagamento <span class="notification-time">há 7 dias</span>
+                            </div>
+                        </div>
+                        <div class="notification-view-status"></div>
+                    </div>
+                    <div class="notification-box notification-read">
+                        <div class="notification-info">
+                            <div class="notification-title">
+                                Abraão Andrade Reis exportou o relatório de vendas <span class="notification-time">há 8 dias</span>
                             </div>
                         </div>
                         <div class="notification-view-status"></div>

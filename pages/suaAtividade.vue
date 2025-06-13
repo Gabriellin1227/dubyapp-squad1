@@ -1,4 +1,8 @@
 <script setup>
+import { useAuth } from '@/stores/useAuth';
+
+const auth = useAuth();
+
 const actions = [
     {
         date: '05/02/2023',
@@ -97,6 +101,27 @@ const actions = [
         description: 'Atualização das taxas da Stone'
     }
 ];
+
+const adminActions = [
+    {
+        date: '05/02/2023',
+        hour: '13:20',
+        module: 'Gestão de Clientes',
+        description: 'Novo cliente adicionado: Nexora'
+    },
+    {
+        date: '04/02/2023',
+        hour: '11:35',
+        module: 'Dashboard',
+        description: 'Exportação de relatório'
+    },
+    {
+        date: '03/02/2023',
+        hour: '14:10',
+        module: 'Configurações',
+        description: 'Alteração de telefone'
+    }
+];
 </script>
 
 <template>
@@ -115,7 +140,12 @@ const actions = [
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="action in actions">
+                    <tr v-if="auth.userRole === 'gestor'" v-for="action in actions">
+                        <td>{{ `${action.date} - ${action.hour}` }}</td>
+                        <td>{{ action.module }}</td>
+                        <td>{{ action.description }}</td>
+                    </tr>
+                    <tr v-if="auth.userRole === 'admin'" v-for="action in adminActions">
                         <td>{{ `${action.date} - ${action.hour}` }}</td>
                         <td>{{ action.module }}</td>
                         <td>{{ action.description }}</td>
