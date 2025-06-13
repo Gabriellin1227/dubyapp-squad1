@@ -209,7 +209,7 @@ function handleLogout() {
             </NuxtLink>
             <NuxtLink v-if="auth.userRole === 'admin'" to="/gestaoClientes">
                 <div id="gestao-usuarios-link" class="menu-item"
-                    :class="{ active: route.path.startsWith('/gestaoUsuarios') }">
+                    :class="{ active: route.path.startsWith('/gestaoClientes') }">
                     <div class="menu-highlight"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="none" stroke="#412884" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
