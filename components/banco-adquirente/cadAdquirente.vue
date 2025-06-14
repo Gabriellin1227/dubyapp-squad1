@@ -3,7 +3,7 @@
     <div class="container-principal" @click.stop>
       <div class="container-conteudo">
         <div class="titulo">
-          <h1>Cadastrar Banco</h1>
+          <h1>Cadastrar Adquirente</h1>
           <!-- Botão de fechar o modal, emite o evento 'fechar' -->
           <button class="icon-button" @click="$emit('fechar')">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,14 +22,14 @@
         <div class="container-itens">
           <div v-if="etapa === 1" class="container-itens">
             <div class="input-group">
-              <div class="group">
+                <div class="group">
               <label for="nomeBanco">Nome</label>
               <input v-model="form.nome" type="text" id="nomeBanco" class="modal-input"
                 placeholder="Digite o nome do banco" />
                 </div>
             </div>
             <div class="input-group">
-              <div class="group">
+                <div class="group">
               <label for="razaoSocial">Razão Social</label>
               <input v-model="form.razaoSocial" type="text" id="razaoSocial" class="modal-input"
                 placeholder="Digite a razão social do banco" />
@@ -41,21 +41,9 @@
                 <input v-model="form.cnpj" type="text" id="cnpj" class="modal-input" placeholder="00.000.000/0000-00" />
               </div>
               <div class="group2">
-                <label for="codBanco">Código do Banco</label>
-                <input v-model="form.codigoBanco" type="text" id="codBanco" class="modal-input"
+                <label for="codBanco">Conta de Repasse</label>
+                <input v-model="form.contarepasse" type="text" id="codBanco" class="modal-input"
                   placeholder="Digite o código numérico do banco" />
-              </div>
-            </div>
-            <div class="input-group3">
-              <div class="group3">
-                <label for="agencia">Agência</label>
-                <input v-model="form.agencia" type="text" id="agencia" class="modal-input"
-                  placeholder="Digite o número da agência" />
-              </div>
-              <div class="group3">
-                <label for="conta">Conta</label>
-                <input v-model="form.conta" type="text" id="conta" class="modal-input"
-                  placeholder="Digite o número da conta e o dígito verificador" />
               </div>
             </div>
           </div>
@@ -103,9 +91,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { defineEmits } from 'vue';
-import { createBanco } from '@/services/bancoService'; // ajuste caminho
 import type { BancoStatus } from '@/services/bancoService';
 import { Status } from '~/services/shared/statusEnum';
+import { createAdquirente } from '~/services/adquirentesService';
 
 const emit = defineEmits(['fechar', 'atualizarLista']);
 const router = useRouter();
@@ -123,9 +111,7 @@ const form = ref({
   nome: '',
   razaoSocial: '',
   cnpj: '',
-  codigoBanco: '',
-  agencia: '',
-  conta: '',
+  contarepasse: '',
   observacoes: '',
   imagem: null as File | null,
 });
@@ -149,15 +135,13 @@ async function enviarFormulario() {
       nome: form.value.nome,
       razao_social: form.value.razaoSocial,
       cnpj: form.value.cnpj,
-      codigo: form.value.codigoBanco,
-      agencia: form.value.agencia,
-      conta_corrente: form.value.conta,
+      contarepasse: form.value.contarepasse,
       status: STATUS_INICIAL,
       observacoes: form.value.observacoes,
       logo_url: '', // ou nulo, ou backend preenche
     };
 
-    await createBanco(payload);
+    await createAdquirente(payload);
     emit('atualizarLista');
     emit('fechar');
   } catch (error) {
@@ -191,6 +175,7 @@ const voltar = () => {
   flex-direction: column;
   gap: 8px;
 }
+
 
 .input-group label,
 .input-group2 label,

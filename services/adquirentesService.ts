@@ -27,6 +27,13 @@ export const getAdquirentesById = async (id: number): Promise<Adquirentes> => {
     return await $fetch(`${API_URL}/adquirentes/id/${id}`);
 };
 
+export const createAdquirente = async (data: any): Promise<Adquirentes> => {
+    return await $fetch(`${API_URL}/adquirentes`, {
+        method: 'POST',
+        body: data,
+    });
+};
+
 export const updateAdquirenteStatus = async (id: number, status: AdquirentesStatus) => {
     return await $fetch(`${API_URL}/adquirentes/${id}/status`, {
         method: 'PUT',

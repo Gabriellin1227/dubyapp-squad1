@@ -50,9 +50,10 @@
                 </button>
             </div>
         </div>
+        <div class="todo-conteudo">
         <div class="info-banco">
             <div class="titulo">
-                <p>Informações do banco</p>
+                <p>Informações do adquirente</p>
             </div>
             <div class="container-banco">
                 <div class="img-banco">
@@ -75,7 +76,16 @@
 
         <div class="info-empresa">
             <div class="titulo">
-                <p>Informações da Empresa</p>
+                <p>Alerta de renovação de taxas</p>
+                <button  @click="toGestaoTaxas">
+                    Gestão de taxas
+                    <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 8.33301L8 4.33301" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.33333 4.99967C4.51743 4.99967 4.66667 4.85044 4.66667 4.66634C4.66667 4.48225 4.51743 4.33301 4.33333 4.33301C4.14924 4.33301 4 4.48225 4 4.66634C4 4.85044 4.14924 4.99967 4.33333 4.99967Z" fill="#F6F6F6" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.66634 8.33366C7.85044 8.33366 7.99967 8.18442 7.99967 8.00033C7.99967 7.81623 7.85044 7.66699 7.66634 7.66699C7.48225 7.66699 7.33301 7.81623 7.33301 8.00033C7.33301 8.18442 7.48225 8.33366 7.66634 8.33366Z" fill="#F6F6F6" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M1.33301 13V2.33333C1.33301 1.97971 1.47348 1.64057 1.72353 1.39052C1.97358 1.14048 2.31272 1 2.66634 1H9.33301C9.68663 1 10.0258 1.14048 10.2758 1.39052C10.5259 1.64057 10.6663 1.97971 10.6663 2.33333V13L8.66634 11.6667L7.33301 13L5.99967 11.6667L4.66634 13L3.33301 11.6667L1.33301 13Z" stroke="#F6F6F6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
             </div>
             <div class="container-empresa">
                 <div class="agencia-banco">
@@ -99,6 +109,7 @@
                 </div>
             </div>
         </div>
+        </div>
     </div>
 </template>
 
@@ -111,6 +122,7 @@ import { getAdquirentesById, type Adquirentes } from '~/services/adquirentesServ
 const route = useRoute();
 const router = useRouter();
 const adquirente = ref<Adquirentes | null>(null);
+const id = Number(route.params.id);
 
 const fetchAdquirente = async () => {
     const id = Number(route.params.id);
@@ -126,6 +138,12 @@ const fetchAdquirente = async () => {
         console.error("Erro ao buscar adquirente:", error);
     }
 };
+
+function toGestaoTaxas() {
+    console.log("Navegando para gestão de taxas");
+    console.log("ID a navegar:", id)
+  router.push(`/adquirentes/${id}/gestaoTaxas`)
+}
 
 console.log(fetchAdquirente)
 onMounted(() => {
@@ -165,12 +183,38 @@ const voltar = () => {
     gap: 32px;
 }
 
+.todo-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .icon-button {
     background-color: #412884;
     color: #fff;
     width: 40px;
     height: 40px;
     border-radius: 10px;
+}
+
+.info-empresa {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.titulo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulo button {
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #412884;
+    color: #fff;
+    font-size: 12px;
 }
 
 .titulo p {
@@ -248,7 +292,7 @@ const voltar = () => {
     display: flex;
     flex-direction: column;
     width: 1104px;
-    height: 170px;
+    height: 256px;
     padding: 16px;
     border: 1px #41288433 solid;
     border-radius: 10px;
@@ -272,22 +316,14 @@ const voltar = () => {
     margin: 0;
 }
 
-.info-empresa {
-    margin: 56px 0 0 0;
-}
-
 .container-obs {
     display: flex;
     flex-direction: column;
     width: 1104px;
-    height: 136px;
+    height: 92px;
     padding: 16px;
     border: 1px #41288433 solid;
     border-radius: 10px;
-}
-
-.info-obs {
-    margin: 56px 0 0 0;
 }
 
 .obs-banco p {

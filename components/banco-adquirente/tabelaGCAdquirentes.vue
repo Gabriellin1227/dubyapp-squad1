@@ -5,7 +5,7 @@
                 <tr>
                     <th>
                         <div class="thinput">
-                            <input type="checkbox"/>
+                            <input type="checkbox" />
                         </div>
                     </th>
                     <th>
@@ -26,7 +26,7 @@
                 <tr v-for="adquirente in adquirente" :key="adquirente.id">
                     <td>
                         <div class="checkbox-td">
-                            <input type="checkbox"/>
+                            <input type="checkbox" />
                         </div>
                     </td>
                     <td>
@@ -92,106 +92,136 @@ onMounted(() => {
 
 <style scoped>
 .table-container {
-  width: 1136px;
-  height: 692px;
-  background-color: #3f297e;
-  border-radius: 12px;
-  overflow-x: auto;
+    width: 1136px;
+    height: 683px;
+    background-color: #3f297e;
+    border-radius: 12px;
+    overflow-x: auto;
 }
 
 /* Tabela geral */
 table {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border-collapse: collapse;
-  gap: 48px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-collapse: collapse;
+    gap: 48px;
 }
 
 thead tr,
 tbody tr {
-  display: flex;
-  flex-direction: row;
-  gap: 48px;
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
 }
 
 thead tr {
-  padding: 38px 0 0 32px;
-  color: #f6f6f6b2;
-  font-weight: 600;
-  font-size: var(--font-md);
+    padding: 38px 0 0 32px;
+    color: #f6f6f6b2;
+    font-weight: 600;
+    font-size: var(--font-md);
 }
 
 tbody {
-  display: flex;
-  flex-direction: column;
-  padding-left: 32px;
-  gap: 32px;
-  color: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    padding-left: 32px;
+    gap: 32px;
+    color: #f6f6f6;
 }
 
 /* Cabeçalhos com largura definida */
-.thinput, .thnome, .thagencia, .thconta, .thstatus,
-.checkbox-td, .nome, .agencia, .conta-corrente, .status, .botao-olho {
-  display: flex;
-  align-items: center;
+.thinput,
+.thnome,
+.thagencia,
+.thconta,
+.thstatus,
+.checkbox-td,
+.nome,
+.agencia,
+.conta-corrente,
+.status,
+.botao-olho {
+    display: flex;
+    align-items: center;
 }
 
 /* Larguras */
-.thinput       { width: 104px; }
-.thnome        { width: 176px; }
-.thagencia,
-.agencia       { width: 160px; }
-.thconta,
-.conta-corrente{ width: 160px; }
-.thstatus,
-.status        { width: 159px; height: 32px; }
+.thinput {
+    width: 104px;
+}
 
-.checkbox-td   { width: 32px; height: 32px; }
+.thnome {
+    width: 176px;
+}
+
+.thagencia,
+.agencia {
+    width: 160px;
+}
+
+.thconta,
+.conta-corrente {
+    width: 160px;
+}
+
+.thstatus {
+    width: 159px;
+}
+
+.status {
+    width: 159px;
+    height: 32px;
+}
+
+.checkbox-td {
+    width: 32px;
+    height: 32px;
+}
 
 .nome {
-  gap: 48px;
-  min-width: 256px;
-  color: inherit;
-  text-decoration: none;
+    gap: 48px;
+    min-width: 256px;
+    color: inherit;
+    text-decoration: none;
 }
 
 .nome:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .nome img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
 }
 
 /* Botão olho */
 .botao-olho {
-  gap: 48px;
-  height: 32px;
-  justify-content: center;
+    gap: 48px;
+    height: 32px;
+    justify-content: center;
 }
 
 /* Checkbox */
 input[type="checkbox"] {
-  appearance: none;
-  width: 24px;
-  height: 24px;
-  border: 2px solid white;
-  border-radius: 6px;
-  background-color: #3f2285;
-  cursor: pointer;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid white;
+    border-radius: 6px;
+    background-color: #3f2285;
+    cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
-  background-color: white;
+    background-color: white;
 }
 
 /* Botão de ação */
 .btn-view {
-  background: none;
-  border: none;
-  cursor: pointer;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 </style>
