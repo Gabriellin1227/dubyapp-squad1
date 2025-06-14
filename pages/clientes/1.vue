@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const isActive = ref(true);
 const showModal = ref(false);
-const showHistModal = ref(true);
+const showHistModal = ref(false);
 const stepPage = ref(1);
 
 const handlerModal = () => {

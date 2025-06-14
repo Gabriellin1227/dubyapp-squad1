@@ -13,10 +13,14 @@ const auth = useAuth();
         <div class="wrap-3">
             <div class="wrap-2">
                 <div class="wrap-1">
-                    <component :is="cardsTotalGestor" />
+                    <NuxtLink to="/dashboard/analiseTotais">
+                        <component :is="cardsTotalGestor" />
+                    </NuxtLink>
                     <component :is="totalVendasGestor" />
                 </div>
-                <component :is="rankingAdquirentesGestor" />
+                <NuxtLink to="/dashboard/rankingAdquirentes">
+                    <component :is="rankingAdquirentesGestor" />
+                </NuxtLink>
             </div>
             <component :is="taxasAplicadas" />
         </div>

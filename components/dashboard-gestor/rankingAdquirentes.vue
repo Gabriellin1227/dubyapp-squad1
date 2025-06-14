@@ -74,6 +74,7 @@ const rankings = [
             <thead>
                 <tr>
                     <th class="row-gap"></th>
+                    <th class="row-gap"></th>
                     <th>Nome do adquirente</th>
                     <th>Total divergente</th>
                     <th>Discrepâncias</th>
@@ -163,11 +164,13 @@ div.ranking-container {
                 justify-content: space-between;
                 align-items: center;
                 gap: 16px;
+
+                width: 100%;
             }
         }
 
         .row-gap {
-            width: 72px;
+            width: 24px;
         }
 
         tbody {
@@ -191,23 +194,31 @@ div.ranking-container {
         }
 
         td:nth-of-type(1) {
-            width: 16px;
-        }
-
-        td:nth-of-type(2) {
             width: 24px;
         }
 
-        td:nth-of-type(3), th:nth-of-type(2) {
+        td:nth-of-type(2) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 24px;
+            width: 24px;
+
+            border: 1px solid rgba(18, 40, 64, 0.3);
+            border-radius: 50%;
+        }
+
+        td:nth-of-type(3), th:nth-of-type(3) {
             width: 104px;
         }
 
-        td:nth-of-type(4), th:nth-of-type(3) {
+        td:nth-of-type(4), th:nth-of-type(4) {
             width: 72px;
             text-align: right;
         }
         
-        td:nth-of-type(5), th:nth-of-type(4) {
+        td:nth-of-type(5), th:nth-of-type(5) {
             width: 72px;
             text-align: right;
         }
